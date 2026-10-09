@@ -20,6 +20,14 @@ input,button,select{font-family:inherit}
 ::selection{background:#A9C6BA;color:#241F21}
 image-slot::part(empty),image-slot::part(ring){opacity:0}
 image-slot::part(frame){background:#C4B9A6}
+/* Locations panels: vertical accordion on mobile */
+@media (max-width:767px){
+  .mk-scroll{overflow-x:visible!important}
+  .mk-panels{flex-direction:column!important;min-width:0!important;height:auto!important;min-height:0!important}
+  .mk-panel{flex:none!important;width:100%!important;padding:24px 20px!important;gap:16px!important}
+  .mk-vert{writing-mode:horizontal-tb!important;transform:none!important;white-space:normal!important}
+  .mk-open{min-width:0!important}
+}
 </style>
 <script src="./image-slot.js"></script>
 </helmet>
@@ -109,19 +117,19 @@ image-slot::part(frame){background:#C4B9A6}
       <p style="margin:0;font-size:16px;line-height:1.6;max-width:520px">Everwild operates in four locations today. The Crestwood Investment Fund will finance its expansion into new locations across two provinces — British Columbia and Ontario.</p>
     </div>
     <sc-if value="{{ layoutPanels }}" hint-placeholder-val="{{ true }}">
-      <div style="overflow-x:auto;width:100vw;margin-left:calc(50% - 50vw)">
-        <div style="display:flex;gap:0;min-width:760px;height:calc(100vh - 74px);min-height:520px">
+      <div class="mk-scroll" style="overflow-x:auto;width:100vw;margin-left:calc(50% - 50vw)">
+        <div class="mk-panels" style="display:flex;gap:0;min-width:760px;height:calc(100vh - 74px);min-height:520px">
           <sc-for list="{{ panels }}" as="p" hint-placeholder-count="4">
-            <button onClick="{{ p.select }}" style="all:unset;cursor:pointer;box-sizing:border-box;flex:{{ p.grow }};min-width:0;overflow:hidden;background:{{ p.bg }};color:{{ p.fg }};padding:clamp(24px,3.4vw,56px);display:flex;flex-direction:column;justify-content:space-between;gap:24px;transition:flex .55s cubic-bezier(.2,.7,.2,1)">
+            <button class="mk-panel" onClick="{{ p.select }}" style="all:unset;cursor:pointer;box-sizing:border-box;flex:{{ p.grow }};min-width:0;overflow:hidden;background:{{ p.bg }};color:{{ p.fg }};padding:clamp(24px,3.4vw,56px);display:flex;flex-direction:column;justify-content:space-between;gap:24px;transition:flex .55s cubic-bezier(.2,.7,.2,1)">
               <div style="display:flex;justify-content:space-between;gap:12px;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;white-space:nowrap">
                 <span>{{ p.code }}</span>
                 <sc-if value="{{ p.on }}" hint-placeholder-val="{{ false }}"><span>{{ p.kind }}</span></sc-if>
               </div>
               <sc-if value="{{ p.off }}" hint-placeholder-val="{{ true }}">
-                <span style="font-family:'commuters-sans','Commuters Sans','Jost','Century Gothic','Avenir Next',Arial,sans-serif;writing-mode:vertical-rl;transform:rotate(180deg);font-size:clamp(20px,2vw,26px);font-weight:600;letter-spacing:0.12em;text-transform:uppercase;white-space:nowrap">{{ p.name }}</span>
+                <span class="mk-vert" style="font-family:'commuters-sans','Commuters Sans','Jost','Century Gothic','Avenir Next',Arial,sans-serif;writing-mode:vertical-rl;transform:rotate(180deg);font-size:clamp(20px,2vw,26px);font-weight:600;letter-spacing:0.12em;text-transform:uppercase;white-space:nowrap">{{ p.name }}</span>
               </sc-if>
               <sc-if value="{{ p.on }}" hint-placeholder-val="{{ false }}">
-                <div style="display:flex;flex-direction:column;gap:16px;min-width:300px;max-width:520px">
+                <div class="mk-open" style="display:flex;flex-direction:column;gap:16px;min-width:300px;max-width:520px">
                   <span style="font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase">{{ p.province }} · New</span>
                   <span style="font-family:'commuters-sans','Commuters Sans','Jost','Century Gothic','Avenir Next',Arial,sans-serif;font-size:clamp(32px,4vw,56px);font-weight:600;letter-spacing:0.06em;line-height:1.05;text-transform:uppercase">{{ p.name }}</span>
                   <p style="margin:0;font-size:16px;line-height:1.6">{{ p.desc }}</p>
