@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Crestwood — Locations Map</title>
+<link rel="stylesheet" href="https://use.typekit.net/lda4tbh.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;600&family=Figtree:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.css">
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.js"></script>
+<style>
+  :root{--cream:#FAF6EE;--beige:#D6CDBD;--teal:#A9C6BA;--char:#241F21;--forest:#335445;--h:'commuters-sans','Commuters Sans','Jost','Century Gothic',Arial,sans-serif;--b:'proxima-nova','Proxima Nova','Figtree','Helvetica Neue',Arial,sans-serif}
+  html,body{margin:0;height:100%;background:var(--char);font-family:var(--b);-webkit-font-smoothing:antialiased}
+  .wrap{position:relative;height:100%;display:flex;overflow:hidden}
+  #map{flex:1;height:100%;background:#241F21}
+  .panel{position:absolute;z-index:5;top:24px;left:24px;bottom:24px;width:344px;background:var(--char);color:var(--cream);display:flex;flex-direction:column;overflow:auto;scrollbar-width:thin;scrollbar-color:rgba(250,246,238,.25) transparent}
+  .panel header{padding:26px 24px 10px;display:flex;flex-direction:column;gap:14px}
+  .hrow{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .eyebrow{font-family:var(--h);font-weight:600;font-size:22px;line-height:1.2;letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
+  .all{white-space:nowrap;flex:none;font:600 12px/1.4 var(--b);letter-spacing:.2em;text-transform:uppercase;color:var(--beige);background:none;border:0;padding:0;cursor:pointer}
+  .all:hover{color:var(--cream)}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--beige)}
+  .legend span{display:flex;align-items:center;gap:8px}
+  .lg{width:10px;height:10px;border-radius:50%;box-sizing:border-box}
+  .lg.done{background:var(--teal)}
+  .lg.new{border:2px solid var(--teal)}
+  .pbody{display:flex;flex-direction:column;flex:1}
+  .caret{display:none;transition:transform .3s}
+  .foot{margin-top:auto;padding:18px 24px 22px;display:flex;flex-direction:column;gap:12px}
+  .help{margin:0;font-size:12px;line-height:1.55;color:var(--beige)}
+  .help b{font-weight:600;color:var(--cream)}
+  .reset{align-self:flex-start;white-space:nowrap;font:600 12px/1.4 var(--b);letter-spacing:.2em;text-transform:uppercase;color:var(--teal);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+  .reset:hover{color:var(--cream)}
+  .group{padding:16px 24px 6px;font:600 11px/1.4 var(--b);letter-spacing:.2em;text-transform:uppercase;color:var(--teal)}
+  .item{width:100%;box-sizing:border-box;display:grid;grid-template-columns:14px 1fr;gap:1px 14px;align-items:center;padding:13px 24px;border:0;background:none;color:inherit;text-align:left;cursor:pointer;font:inherit;transition:background .2s}
+  .item:hover{background:#2E282A}
+  .item.on{background:var(--forest)}
+  .dot{grid-row:span 2;width:12px;height:12px;border-radius:50%;box-sizing:border-box}
+  .dot.done{background:var(--cream)}
+  .dot.new{border:2px solid var(--cream)}
+  .name{font-family:var(--h);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;line-height:1.25}
+  .sub{font-size:13px;color:var(--beige);line-height:1.4}
+  .item.on .sub{color:var(--cream)}
+  .note{margin-top:auto;padding:18px 24px;font-size:12px;line-height:1.5;color:var(--beige)}
+  .mk{cursor:pointer;width:18px;height:18px;display:grid;place-items:center}
+  .mk::before{content:'';position:absolute;left:50%;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;border:1.5px solid var(--forest);box-sizing:border-box;pointer-events:none;animation:pulse 2.6s cubic-bezier(.2,.6,.3,1) infinite;animation-delay:var(--d,0s)}
+  @keyframes pulse{0%{transform:scale(1);opacity:.7}70%,100%{transform:scale(2.8);opacity:0}}
+  @media (prefers-reduced-motion:reduce){.mk::before{animation:none;opacity:0}}
+  .pin{width:14px;height:14px;border-radius:50%;box-sizing:border-box;transition:transform .25s,box-shadow .25s}
+  .pin.done{background:var(--forest);box-shadow:0 0 0 2px var(--cream)}
+  .pin.new{background:var(--cream);border:3px solid var(--forest);box-shadow:0 0 0 1.5px var(--cream)}
+  .mk.on .pin{transform:scale(1.5)}
+  .mk.on .pin.done{box-shadow:0 0 0 2px var(--cream),0 0 0 9px rgba(51,84,69,.2)}
+  .mk.on .pin.new{box-shadow:0 0 0 1.5px var(--cream),0 0 0 9px rgba(51,84,69,.2)}
+  .lbl{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);white-space:nowrap;background:var(--char);color:var(--cream);border-radius:2px;padding:6px 10px;font:600 11px/1.3 var(--b);letter-spacing:.14em;text-transform:uppercase;opacity:0;pointer-events:none;transition:opacity .2s}
+  .mk:hover .lbl,.mk.on .lbl{opacity:1}
+  .mapboxgl-ctrl-group{border-radius:0!important;box-shadow:none!important;background:var(--char)!important}
+  .mapboxgl-ctrl-group button{width:32px;height:32px;border-color:rgba(250,246,238,.16)!important}
+  .mapboxgl-ctrl-group button .mapboxgl-ctrl-icon{filter:invert(1)}
+  .mapboxgl-ctrl-bottom-right{transition:right .35s}
+  .toast{position:absolute;z-index:4;left:50%;bottom:24px;transform:translate(-50%,8px);background:var(--char);color:var(--cream);border-radius:2px;padding:10px 16px;font:600 11px/1.4 var(--b);letter-spacing:.16em;text-transform:uppercase;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s}
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+  body.open .toast{left:calc(50% - 212px)}
+  body.open .mapboxgl-ctrl-bottom-right{right:432px}
+  .modal{position:absolute;z-index:6;top:24px;right:24px;bottom:24px;width:400px;background:var(--cream);color:var(--char);display:flex;flex-direction:column;overflow:auto;opacity:0;transform:translateX(24px);pointer-events:none;transition:opacity .35s ease,transform .45s cubic-bezier(.2,.7,.2,1)}
+  .modal.show{opacity:1;transform:none;pointer-events:auto}
+  .modal.gopen{transition:none;transform:none!important}
+  .gal{position:relative;height:280px;flex:none;overflow:hidden;background:#C4B9A6}
+  .track{display:flex;height:100%;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+  .gal .ph{position:relative;flex:0 0 100%;height:100%;background:#C4B9A6;overflow:hidden}
+  .nav{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;border:0;background:rgba(250,246,238,.9);color:var(--char);display:grid;place-items:center;cursor:pointer;opacity:0;transition:opacity .2s,background .2s}
+  .nav:hover{background:var(--cream)}
+  .gal:hover .nav,.gal.full .nav{opacity:1}
+  .prev{left:12px}.next{right:12px}
+  .gbar{position:absolute;left:0;right:0;bottom:0;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;background:linear-gradient(transparent,rgba(36,31,33,.45))}
+  .dots{display:flex;gap:6px}
+  .dots button{width:7px;height:7px;padding:0;border-radius:50%;border:1px solid var(--cream);background:transparent;cursor:pointer}
+  .dots button.on{background:var(--cream)}
+  .vg{font:600 11px/1 var(--b);letter-spacing:.2em;text-transform:uppercase;color:var(--char);background:var(--cream);border:0;border-radius:2px;padding:10px 14px;cursor:pointer;white-space:nowrap;transition:background .2s}
+  .vg:hover{background:var(--teal)}
+  .gclose{display:none;position:absolute;top:20px;right:20px;width:40px;height:40px;border-radius:50%;border:1px solid var(--cream);background:none;color:var(--cream);place-items:center;cursor:pointer}
+  .gclose:hover{background:var(--cream);color:var(--char)}
+  .gal.full{position:fixed;inset:0;height:auto;z-index:50;background:var(--char)}
+  .gal.full .ph{background:#2E282A}
+  .gal.full .gclose{display:grid}
+  .gal.full .vg{display:none}
+  .gal.full .gbar{justify-content:center;background:none;padding:24px}
+  .more{align-self:flex-start;font:600 12px/1.4 var(--b);letter-spacing:.2em;text-transform:uppercase;color:var(--forest);text-decoration:underline;text-underline-offset:4px;display:flex;gap:8px}
+  .more:hover{color:var(--char)}
+  .gal image-slot{position:absolute;inset:0;color:#C4B9A6}
+  .gal image-slot::part(empty),.gal image-slot::part(ring){display:none}
+  .mbody{padding:28px;display:flex;flex-direction:column;gap:18px}
+  .mtop{display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .mtag{font:600 12px/1.4 var(--b);letter-spacing:.2em;text-transform:uppercase;color:var(--forest)}
+  .close{width:40px;height:40px;border-radius:50%;border:1px solid var(--char);background:none;color:var(--char);display:grid;place-items:center;cursor:pointer;flex:none;transition:background .2s,color .2s}
+  .close:hover{background:var(--char);color:var(--cream)}
+  .mname{margin:0;font-family:var(--h);font-weight:600;font-size:30px;line-height:1.1;letter-spacing:.06em;text-transform:uppercase}
+  .mdesc{margin:0;font-size:16px;line-height:1.6;text-wrap:pretty}
+  .facts{margin:0;display:grid;border-top:1px solid var(--beige)}
+  .facts div{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:12px 0;border-bottom:1px solid var(--beige)}
+  .facts dt{font:600 12px/1.5 var(--b);letter-spacing:.2em;text-transform:uppercase;color:var(--forest)}
+  .facts dd{margin:0;font-size:15px;line-height:1.5}
+  @media (max-width:760px){
+    body.open .mapboxgl-ctrl-bottom-right{right:0}
+    .modal{inset:0;width:auto}
+    .panel{top:12px;left:12px;right:12px;bottom:auto;width:auto;max-height:calc(100% - 24px)}
+    .panel header{flex-direction:row;justify-content:space-between;align-items:center;padding:16px 18px;cursor:pointer}
+    .panel .eyebrow{font-size:16px}
+    .caret{display:block;color:var(--cream)}
+    .panel.open .caret{transform:rotate(180deg)}
+    .panel:not(.open) .pbody{display:none}
+    .item{padding:12px 18px}
+    .group,.foot{padding-left:18px;padding-right:18px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="map"></div>
+  <div class="toast" id="toast"></div>
+  <aside class="panel">
+    <header>
+      <span class="eyebrow">Everwild in Canada</span><span class="caret" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5l5 5 5-5"/></svg></span>
+    </header>
+    <div class="pbody">
+    <div id="list"></div>
+    <div class="foot">
+      <p class="help" id="help"></p>
+      <button class="reset" id="reset">Reset map ↺</button>
+    </div>
+    </div>
+  </aside>
+  <section class="modal" id="modal" aria-hidden="true">
+    <div class="gal" id="gal">
+      <div class="track" id="track">
+        <div class="ph"><image-slot id="m-a" shape="rect" placeholder=""></image-slot></div>
+        <div class="ph"><image-slot id="m-b" shape="rect" placeholder=""></image-slot></div>
+        <div class="ph"><image-slot id="m-c" shape="rect" placeholder=""></image-slot></div>
+      </div>
+      <button class="nav prev" id="prev" aria-label="Previous image"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2L4 7l5 5"/></svg></button>
+      <button class="nav next" id="next" aria-label="Next image"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l5 5-5 5"/></svg></button>
+      <div class="gbar">
+        <div class="dots" id="dots"></div>
+        <button class="vg" id="vg">View gallery</button>
+      </div>
+      <button class="gclose" id="gclose" aria-label="Close gallery"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 2l10 10M12 2L2 12"/></svg></button>
+    </div>
+    <div class="mbody">
+      <div class="mtop"><span class="mtag" id="mtag"></span><button class="close" id="close" aria-label="Close"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 2l10 10M12 2L2 12"/></svg></button></div>
+      <h3 class="mname" id="mname"></h3>
+      <p class="mdesc" id="mdesc"></p>
+      <dl class="facts" id="facts"></dl>
+      <a class="more" id="more" href="#" target="_top">View details <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+</div>
+<script src="./image-slot.js"></script>
+<script>
+  const q = new URLSearchParams(location.search);
+  mapboxgl.accessToken = q.get('token') || 'pk.eyJ1IjoidmVyYi1tYXBib3giLCJhIjoiY2x3b3lwYWRxMHB3czJqcXF6M2JuaGluMSJ9.STvoAKDCZpyo3sykoCPPpw';
+  const STYLE = 'mapbox://styles/' + (q.get('style') || 'mapbox/light-v11');
+
+  const places = [
+    { done: true, slug: 'canmore', name: 'Canmore', prov: 'AB', sub: 'Operating · Alberta', ll: [-115.3576, 51.0892], z: 11, tag: 'Alberta · Operating',
+      desc: 'The original Everwild, set in the Bow Valley with views of the Three Sisters. The flagship for the brand’s thermal circuit.',
+      facts: [['Type', 'Mountain Nordic spa'], ['Status', 'Open'], ['Opened', '2019'], ['Features', 'Outdoor saunas, cold plunges, rest lodge']] },
+    { done: true, slug: 'calgary', name: 'Calgary', prov: 'AB', sub: 'Operating · Alberta', ll: [-114.0719, 51.0447], z: 11, tag: 'Alberta · Operating',
+      desc: 'An urban Everwild close to Basecamp Group’s head office, serving members and visitors year-round.',
+      facts: [['Type', 'Urban Nordic spa'], ['Status', 'Open'], ['Opened', '2021'], ['Features', 'Thermal circuit, memberships, treatments']] },
+    { done: true, slug: 'edmonton', name: 'Edmonton', prov: 'AB', sub: 'Operating · Alberta', ll: [-113.4938, 53.5461], z: 11, tag: 'Alberta · Operating',
+      desc: 'Set along the North Saskatchewan River valley, a year-round spa built for prairie winters.',
+      facts: [['Type', 'River valley spa'], ['Status', 'Open'], ['Opened', '2023'], ['Features', 'Heated pools, saunas, café']] },
+    { done: true, slug: 'kelowna', name: 'Kelowna', prov: 'BC', sub: 'Operating · British Columbia', ll: [-119.4960, 49.8880], z: 11, tag: 'British Columbia · Operating',
+      desc: 'Everwild’s first location in British Columbia, on the shores of Okanagan Lake in wine country.',
+      facts: [['Type', 'Lakeside Nordic spa'], ['Status', 'Open'], ['Opened', '2024'], ['Features', 'Lake-view saunas, cold plunges, terraces']] },
+    { done: false, slug: 'pacific', name: 'Pacific Coast', prov: 'BC', sub: 'In development · British Columbia', ll: [-125.9066, 49.153], z: 9, tag: 'British Columbia · New',
+      desc: 'Nordic spa sites on British Columbia’s Pacific coast, where the hot-cold thermal cycle meets ocean air and old-growth forest.',
+      facts: [['Type', 'Coastal Nordic spa'], ['Status', 'Site selection'], ['Target open', '2028'], ['Features', 'Ocean-view saunas, cold plunges, rest lodges']] },
+    { done: false, slug: 'whistler', name: 'Whistler', prov: 'BC', sub: 'In development · British Columbia', ll: [-122.9574, 50.1163], z: 10, tag: 'British Columbia · New',
+      desc: 'One of North America’s best-known resort towns, with visitor demand through both ski season and summer.',
+      facts: [['Type', 'Four-season resort spa'], ['Status', 'Due diligence'], ['Target open', '2028'], ['Features', 'Mountain thermal circuit, outdoor pools, café']] },
+    { done: false, slug: 'ontario', name: 'Lake Simcoe', prov: 'ON', sub: 'In development · Ontario', ll: [-79.43, 44.40], z: 10, tag: 'Ontario · New',
+      desc: 'A lakeside retreat about an hour north of Toronto, built for weekend escapes and overnight stays.',
+      facts: [['Type', 'Destination retreat'], ['Status', 'Site selection'], ['Target open', '2029'], ['Features', 'Lakeside saunas, cabins, forest trails']] },
+    { done: false, slug: 'toronto', name: 'Downtown Toronto', prov: 'ON', sub: 'In development · Ontario', ll: [-79.383, 43.651], z: 12, tag: 'Ontario · New',
+      desc: 'An urban Everwild in Canada’s largest city, serving frequent local visits as well as travellers.',
+      facts: [['Type', 'Urban Nordic spa'], ['Status', 'Site selection'], ['Target open', '2029'], ['Features', 'Rooftop thermal circuit, memberships, treatments']] }
+  ];
+
+  const narrow = () => window.innerWidth <= 760;
+  const pad = () => narrow() ? { top: 50, bottom: 40, left: 30, right: 30 } : { top: 70, bottom: 70, left: 392, right: 70 };
+  // Default view: Canada framed coast to coast, right of the menu
+  const HOME = new mapboxgl.LngLatBounds([-136, 42], [-56, 66]);
+  const homePad = () => narrow() ? { top: 90, bottom: 30, left: 20, right: 20 } : { top: 70, bottom: 70, left: 392, right: 70 };
+  const zero = { top: 0, bottom: 0, left: 0, right: 0 };
+  const mercY = lat => Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 360)) / (2 * Math.PI);
+  const overview = () => {
+    const el = document.getElementById('map');
+    const s = Math.min(el.clientWidth / 1741, el.clientHeight / 836);
+    if (!narrow()) return { center: [-109.8, 56.18], zoom: 4.08 + Math.log2(s), pitch: 0, bearing: 0, padding: zero };
+    const pd = homePad();
+    const w = Math.max(el.clientWidth - pd.left - pd.right, 100), hh = Math.max(el.clientHeight - pd.top - pd.bottom, 100);
+    const sw = HOME.getSouthWest(), ne = HOME.getNorthEast();
+    const zx = Math.log2(w / (512 * (ne.lng - sw.lng) / 360));
+    const zy = Math.log2(hh / (512 * (mercY(ne.lat) - mercY(sw.lat))));
+    const midY = (mercY(ne.lat) + mercY(sw.lat)) / 2;
+    const midLat = (2 * Math.atan(Math.exp(midY * 2 * Math.PI)) - Math.PI / 2) * 180 / Math.PI;
+    return { center: [(sw.lng + ne.lng) / 2, midLat], zoom: Math.min(zx, zy), pitch: 0, bearing: 0, padding: pd };
+  };
+
+  const map = new mapboxgl.Map({ preserveDrawingBuffer: true,
+    container: 'map', style: STYLE, ...overview(),
+    projection: 'globe',
+    attributionControl: true, logoPosition: 'bottom-left'
+  });
+  window.mbmap = map;
+  // Globe scale differs from mercator: refine zoom by measuring projected bounds
+  let homeCam = null;
+  function goHome() {
+    const cam = overview(), pd = cam.padding, el = document.getElementById('map');
+    if (!narrow()) { map.jumpTo(cam); homeCam = cam; return; }
+    const aw = el.clientWidth - pd.left - pd.right, ah = el.clientHeight - pd.top - pd.bottom;
+    const probe = Object.assign({}, cam);
+    for (let k = 0; k < 3; k++) {
+      map.jumpTo(probe);
+      const w = map.project([-56, 54]).x - map.project([-136, 54]).x;
+      const hh = map.project([-96, 42]).y - map.project([-96, 66]).y;
+      probe.zoom += Math.min(Math.log2(aw / w), Math.log2(ah / hh));
+    }
+    map.jumpTo(probe);
+    homeCam = probe;
+  }
+  map.on('load', () => goHome());
+  // Scroll zoom only with Cmd/Ctrl held; otherwise let the page scroll and show a small hint
+  const isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+  const toast = document.getElementById('toast');
+  let toastT;
+  function hint(msg) { toast.textContent = msg; toast.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => toast.classList.remove('show'), 1600); }
+  map.getContainer().addEventListener('wheel', e => {
+    if (e.ctrlKey || e.metaKey) return;
+    e.stopPropagation();
+    hint('Hold ' + (isMac ? '⌘ Cmd' : 'Ctrl') + ' and scroll to zoom');
+  }, { capture: true });
+  if (matchMedia('(pointer: coarse)').matches) {
+    map.dragPan.disable();
+    map.getContainer().addEventListener('touchmove', e => { if (e.touches.length === 1) hint('Use two fingers to move the map'); }, { passive: true });
+  }
+  map.addControl(new mapboxgl.NavigationControl({ showCompass: false }), 'bottom-right');
+
+  map.on('style.load', () => {
+    map.setFog({ color: '#FAF6EE', 'high-color': '#D6CDBD', 'space-color': '#241F21', 'horizon-blend': 0.05, 'star-intensity': 0 });
+    // Dim everything outside Canada to 50%
+    map.addSource('countries', { type: 'vector', url: 'mapbox://mapbox.country-boundaries-v1' });
+    map.addLayer({ id: 'not-canada', type: 'fill', source: 'countries', 'source-layer': 'country_boundaries',
+      filter: ['!=', ['get', 'iso_3166_1'], 'CA'], paint: { 'fill-color': '#CFC9C0', 'fill-opacity': 0.5 } });
+    map.addLayer({ id: 'not-canada-line', type: 'line', source: 'countries', 'source-layer': 'country_boundaries',
+      filter: ['==', ['get', 'iso_3166_1'], 'CA'], paint: { 'line-color': '#241F21', 'line-width': 1.2, 'line-opacity': 0.2 } });
+    // Dotted provincial and state lines
+    map.getStyle().layers.filter(l => l.type === 'line' && /admin-1/.test(l.id)).forEach(l => {
+      if (/-bg/.test(l.id)) return map.setLayoutProperty(l.id, 'visibility', 'none');
+      map.setLayoutProperty(l.id, 'visibility', 'visible');
+      map.setLayoutProperty(l.id, 'line-cap', 'butt');
+      map.setPaintProperty(l.id, 'line-dasharray', ['literal', [1.5, 2]]);
+      map.setPaintProperty(l.id, 'line-width', ['interpolate', ['linear'], ['zoom'], 2, 1.2, 8, 2]);
+      map.setPaintProperty(l.id, 'line-color', '#6E6762');
+      map.setPaintProperty(l.id, 'line-opacity', 0.9);
+      if (l.minzoom) map.setLayerZoomRange(l.id, 0, l.maxzoom || 24);
+    });
+  });
+
+  let active = -1;
+  const list = document.getElementById('list');
+  const markers = [];
+  [['Operating', true], ['In development', false]].forEach(([title, done]) => {
+    const g = document.createElement('div'); g.className = 'group'; g.textContent = title; list.appendChild(g);
+    places.forEach((p, i) => {
+      if (p.done !== done) return;
+      const el = document.createElement('div');
+      el.className = 'mk';
+      el.style.setProperty('--d', (-i * 0.33) + 's');
+      el.innerHTML = `<span class="pin ${p.done ? 'done' : 'new'}"></span><span class="lbl">${p.name}</span>`;
+      el.addEventListener('click', e => { e.stopPropagation(); if (narrow() && active === i && !modal.classList.contains('show')) return showModal(places[i]); select(i, true); });
+      new mapboxgl.Marker({ element: el }).setLngLat(p.ll).addTo(map);
+      const b = document.createElement('button');
+      b.className = 'item';
+      b.innerHTML = `<span class="dot ${p.done ? 'done' : 'new'}"></span><span class="name">${p.name}</span><span class="sub">${p.sub}</span>`;
+      b.onclick = () => select(i);
+      list.appendChild(b);
+      markers[i] = { el, b };
+    });
+  });
+
+  const modal = document.getElementById('modal');
+  function showModal(p) {
+    document.getElementById('mtag').textContent = p.tag;
+    document.getElementById('mname').textContent = p.name;
+    document.getElementById('mdesc').textContent = p.desc;
+    document.getElementById('facts').innerHTML = p.facts.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
+    ['a', 'b', 'c'].forEach(s => {
+      const old = modal.querySelector('#m-' + s + ', [id^="loc-' + s + '-"]');
+      const n = document.createElement('image-slot');
+      n.id = 'loc-' + s + '-' + p.slug; n.setAttribute('shape', 'rect'); n.setAttribute('placeholder', '');
+      old.replaceWith(n);
+    });
+    document.getElementById('more').href = p.url || '#';
+    go(0);
+    modal.classList.add('show'); modal.setAttribute('aria-hidden', 'false'); document.body.classList.add('open');
+  }
+  let slide = 0, timer = null;
+  const N = 3, track = document.getElementById('track'), dots = document.getElementById('dots'), gal = document.getElementById('gal');
+  for (let k = 0; k < N; k++) { const d = document.createElement('button'); d.setAttribute('aria-label', 'Image ' + (k + 1)); d.onclick = () => go(k); dots.appendChild(d); }
+  function go(k) {
+    slide = (k + N) % N;
+    track.style.transform = 'translateX(' + (-100 * slide) + '%)';
+    [...dots.children].forEach((d, j) => d.classList.toggle('on', j === slide));
+    clearInterval(timer); timer = setInterval(() => { if (!gal.matches(':hover')) go(slide + 1); }, 5000);
+  }
+  document.getElementById('prev').onclick = () => go(slide - 1);
+  document.getElementById('next').onclick = () => go(slide + 1);
+  const galHome = gal.parentNode, wrapEl = document.querySelector('.wrap');
+  function openGal() { modal.classList.add('gopen'); wrapEl.appendChild(gal); gal.classList.add('full'); }
+  function closeGal() { if (!gal.classList.contains('full')) return; gal.classList.remove('full'); galHome.insertBefore(gal, galHome.firstChild); modal.classList.remove('gopen'); }
+  document.getElementById('vg').onclick = openGal;
+  document.getElementById('gclose').onclick = closeGal;
+  document.getElementById('more').onclick = e => { if (document.getElementById('more').getAttribute('href') === '#') e.preventDefault(); };
+  function hideModal() {
+    closeGal(); clearInterval(timer); modal.classList.remove('show'); modal.setAttribute('aria-hidden', 'true'); document.body.classList.remove('open'); }
+
+  let fromPin = true;
+  function onArrive() { if (active >= 0 && (!narrow() || fromPin)) showModal(places[active]); }
+  function select(i, pin) {
+    active = i;
+    fromPin = !!pin;
+    hideModal();
+    map.off('moveend', onArrive);
+    markers.forEach((x, j) => { x.b.classList.toggle('on', j === i); x.el.classList.toggle('on', j === i); });
+    if (i < 0) return map.flyTo({ ...(homeCam || overview()), duration: 1400, essential: true });
+    const p = places[i];
+    map.once('moveend', onArrive);
+    map.flyTo({ center: p.ll, zoom: p.z, padding: narrow() ? { top: 0, bottom: 0, left: 0, right: 0 } : { top: 0, bottom: 0, left: 392, right: 448 }, duration: 1600, essential: true });
+  }
+
+  document.getElementById('reset').onclick = () => select(-1);
+  const panelEl = document.querySelector('.panel');
+  panelEl.querySelector('header').addEventListener('click', () => { if (narrow()) panelEl.classList.toggle('open'); });
+  list.addEventListener('click', e => { if (narrow() && e.target.closest('.item')) panelEl.classList.remove('open'); });
+  const mac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+  const touch = matchMedia('(pointer: coarse)').matches;
+  document.getElementById('help').innerHTML = touch
+    ? 'Tap a location to explore it. Use <b>two fingers</b> to move and zoom the map.'
+    : 'Select a location to explore it. Drag to move the map. Hold <b>' + (mac ? '⌘ Cmd' : 'Ctrl') + '</b> and scroll to zoom.';
+  document.getElementById('close').onclick = () => select(-1);
+  document.addEventListener('keydown', e => {
+    if (gal.classList.contains('full')) {
+      if (e.key === 'Escape') closeGal();
+      if (e.key === 'ArrowLeft') go(slide - 1);
+      if (e.key === 'ArrowRight') go(slide + 1);
+      return;
+    }
+    if (e.key === 'Escape' && active >= 0) select(-1);
+  });
+  window.addEventListener('resize', () => { if (active < 0) goHome(); else homeCam = null; });
+</script>
+</body>
+</html>
