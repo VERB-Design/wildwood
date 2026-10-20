@@ -26,7 +26,7 @@ Copy source: *Copy Deck – Crestwood Investment Fund* (Google Doc 147w3OXPXgrG_
 - Form 2 (bb5df2d0-…, name + email) is unused — likely a newsletter form.
 
 ### Licensing / assets
-- Hero video is `Element Brand Video.mp4` (Troy's pick, 2026-10-20), full 30.7 s re-encoded to 540p (16 MB). Brand-section video is `Everwild 1920x1080.mp4`, re-encoded to 540p (7.9 MB). Confirm usage rights for web; the folder also holds Travel Alberta and third-party (Juan Pablo Cortes Duenez, JRNY Media) footage — each needs its own clearance. **Now in use:** JRNY Media / Danielle Eagleson stills (Image-14 swimmer behind Market at 10%, Image-5 in the Forest panel, Image-66 under Investment), DJI_0714 aerial (Mountain panel), Banff view2 rendering (Urban panel), Harmony View 1 (Prairie panel). Photographer credit may be contractually required.
+- Hero video is `Element Brand Video.mp4` (Troy's pick, 2026-10-20), full 30.7 s re-encoded to 540p (16 MB). Brand-section video is `Everwild 1920x1080.mp4`, re-encoded to 540p (7.9 MB). Confirm usage rights for web; the folder also holds Travel Alberta and third-party (Juan Pablo Cortes Duenez, JRNY Media) footage — each needs its own clearance. **Now in use:** JRNY Media / Danielle Eagleson stills (Image-14 swimmer behind Market at 10%, Image-66 under Investment), Photographer credit may be contractually required.
 - Map renderings: Fernie (Pacific Render Studio), Harmony (Omega), Banff — credit lines may be required.
 - Raw asset library `/assets/` (3.3 GB) is git-ignored. Never commit it.
 - Mapbox token is public in source; add URL restrictions in the Mapbox account.
@@ -45,9 +45,14 @@ Copy source: *Copy Deck – Crestwood Investment Fund* (Google Doc 147w3OXPXgrG_
 - Form error message uses `role="alert"`; colour #8A3B2E on cream not contrast-checked.
 
 ### Media requests not actioned
-- Coastal settings panel has no image (no coastal / Sooke Point imagery supplied); stays solid cream.
 - In-development map galleries and team portraits — no imagery supplied.
-- **Settings imagery is illustrative**: Urban uses a Banff rendering, Mountain/Forest use Canmore photos, Prairie uses Harmony. None of the panels is captioned, but the client should be comfortable with renderings standing in for a setting.
+- **Settings imagery — Unsplash License** (free commercial use, no attribution required; credit is courteous). Replaced the Everwild renderings/photos 2026-10-20 at Troy's request:
+  - Urban — Toronto, ON — @andrefrueh — unsplash.com/photos/62UWrTdRq78
+  - Coastal — Juan de Fuca, BC — @mattdren — unsplash.com/photos/rRwWXI_PeGg
+  - Mountain — Banff, AB — @nunzg — unsplash.com/photos/BP0on2uI8bM
+  - Forest — Canada (Ontario-style shield lake, location unconfirmed) — @arianka — unsplash.com/photos/t9-ArSF_sE8
+  - Prairie — Canada (location unconfirmed) — @sanateddy — unsplash.com/photos/tO0HubKpo70
+  Unsplash License bars selling the photos unaltered or using them to build a competing service; fine for this use. Stock, not Everwild properties — no captions imply otherwise.
 
 ### Reproducibility
 - Renderings: `sips -s format jpeg -s formatOptions 72 -Z 1600`. Video: `avconvert --preset Preset960x540`; poster via `qlmanage -t -s 1280`.

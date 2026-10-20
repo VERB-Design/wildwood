@@ -198,7 +198,7 @@ image-slot::part(frame){background:#C4B9A6}
             <button onClick="{{ p.select }}" style="all:unset;cursor:pointer;box-sizing:border-box;flex:{{ p.grow }};min-width:0;overflow:hidden;background:{{ p.bg }};color:{{ p.fg }};padding:clamp(24px,3.4vw,56px);display:flex;flex-direction:column;justify-content:space-between;gap:24px;transition:flex .55s cubic-bezier(.2,.7,.2,1);position:relative">
               <sc-if value="{{ p.photo }}" hint-placeholder-val="{{ false }}">
                 <img src="{{ p.img }}" alt="" aria-hidden="true" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none">
-                <span style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,{{ p.bg }} 0%,{{ p.bgClear }} 24%,{{ p.bgClear }} 40%,{{ p.bg }} 74%)"></span>
+                <span style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,{{ p.bg }} 0%,{{ p.bgClear }} 15%,{{ p.bgClear }} 44%,{{ p.bg }} 76%)"></span>
               </sc-if>
               <div style="position:relative;display:flex;justify-content:space-between;gap:12px;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;white-space:nowrap">
               </div>
@@ -763,7 +763,8 @@ class Component extends DCLogic {
       ].map((m, i) => {
         const on = i === (this.state.panel ?? 0);
         const pal = [['#241F21', '#FAF6EE'], ['#FAF6EE', '#241F21'], ['#D6CDBD', '#241F21'], ['#A9C6BA', '#241F21'], ['#6F5940', '#FAF6EE']][i];
-        const img = ['img/settings/urban.jpg', null, 'img/settings/mountain.jpg', 'img/settings/forest.jpg', 'img/settings/prairie.jpg'][i];
+        // Settings imagery: Unsplash License (credits in docs/PRODUCTION-NOTES.md)
+        const img = ['urban', 'coastal', 'mountain', 'forest', 'prairie'].map(n => 'img/settings/' + n + '.jpg')[i];
         return { ...m, on, off: !on, img, photo: on && !!img, bgClear: pal[0] + '00', grow: on ? '5 1 0%' : '1 1 0%', bg: pal[0], fg: pal[1], select: () => this.setState({ panel: i }) }; }),
       layoutSplit: this.props.marketsLayout === 'split',
       layoutRoute: this.props.marketsLayout === 'route',
