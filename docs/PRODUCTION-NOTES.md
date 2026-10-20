@@ -38,6 +38,7 @@ Copy source: *Copy Deck – Crestwood Investment Fund* (Google Doc 147w3OXPXgrG_
 ### Accessibility
 - Brand overlay deepened (0.86/0.76/0.55) so ivory body text holds ≥5.5:1 over a white frame wherever text sits; corners fall to 3:1 (no text there). Video is `aria-hidden`, muted, starts paused under `prefers-reduced-motion`, and plays only while in view. Pause/play button (44 px, bottom-right, labelled) added for WCAG 2.2.2 — resolved 2026-10-20.
 - New Market section: charcoal on beige and forest eyebrow on beige — standard brand pairings; not separately audited.
+- **Form field and investor-chip borders at 40% opacity** (Troy, 2026-10-20) — about 1.6:1 against the cream card, below the 3:1 WCAG 1.4.11 minimum for input boundaries. Fields still read as fields (white fill against cream, labels above), and the selected chip is solid forest. Client to accept, or go to ~80% to pass.
 - Form error message uses `role="alert"`; colour #8A3B2E on cream not contrast-checked.
 
 ### Media requests not actioned
