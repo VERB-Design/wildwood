@@ -26,7 +26,7 @@ Copy source: *Copy Deck – Crestwood Investment Fund* (Google Doc 147w3OXPXgrG_
 - Form 2 (bb5df2d0-…, name + email) is unused — likely a newsletter form.
 
 ### Licensing / assets
-- Hero video is `Element Brand Video.mp4` (Troy's pick, 2026-10-20), full 30.7 s re-encoded to 540p (16 MB). Brand-section video is `Everwild 1920x1080.mp4`, re-encoded to 540p (7.9 MB). Confirm usage rights for web; the folder also holds Travel Alberta and third-party (Juan Pablo Cortes Duenez, JRNY Media) footage — each needs its own clearance. **Now in use:** JRNY Media / Danielle Eagleson stills (Image-75 behind Get in Touch under 80% charcoal, Image-14 swimmer behind Market at 10%, Image-66 under Investment), Photographer credit may be contractually required.
+- Hero video is `Element Brand Video.mp4` (Troy's pick, 2026-10-20), full 30.7 s re-encoded to 540p (16 MB). Brand-section video is `Everwild 1920x1080.mp4`, re-encoded to 540p (7.9 MB). Confirm usage rights for web; the folder also holds Travel Alberta and third-party (Juan Pablo Cortes Duenez, JRNY Media) footage — each needs its own clearance. **Now in use:** JRNY Media / Danielle Eagleson stills (Image-75 behind Get in Touch under 80% charcoal, Image-14 swimmer behind Market at 6%, Image-66 under Investment), Photographer credit may be contractually required.
 - Map renderings: Fernie (Pacific Render Studio), Harmony (Omega), Banff — credit lines may be required.
 - Raw asset library `/assets/` (3.3 GB) is git-ignored. Never commit it.
 - Mapbox token is public in source; add URL restrictions in the Mapbox account.
