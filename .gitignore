@@ -2,3 +2,6 @@
 # client reference — kept local, not published
 crestwood/reference/
 crestwood/README.md
+
+# raw client asset library (3GB+) — never commit
+/assets/
