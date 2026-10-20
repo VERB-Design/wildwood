@@ -66,6 +66,8 @@ image-slot::part(frame){background:#C4B9A6}
 </header>
 
 <section id="top" style="position:relative;min-height:calc(100vh - 74px);display:flex;flex-direction:column;justify-content:flex-end;gap:48px;padding:clamp(48px,6vw,96px) 0;box-sizing:border-box;background:#335445;color:#FAF6EE;overflow:hidden">
+  <video data-bg-video muted loop playsinline preload="auto" poster="media/element-hero-poster.jpg" aria-hidden="true" tabindex="-1" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><source src="media/element-hero.mp4" type="video/mp4"></video>
+  <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(51,84,69,0.94) 0%,rgba(51,84,69,0.82) 38%,rgba(51,84,69,0.45) 72%,rgba(51,84,69,0.3) 100%)"></div>
   <div style="position:relative;padding:0 clamp(20px,4vw,56px);display:flex;flex-direction:column;gap:clamp(24px,3vw,36px)">
     <h1 style="margin:0;font-family:'commuters-sans','Commuters Sans','Jost','Century Gothic','Avenir Next',Arial,sans-serif;font-weight:600;font-size:clamp(28px,5.18vw,78px);line-height:1.02;letter-spacing:0.06em;text-transform:uppercase;text-wrap:balance;max-width:1300px">The Crestwood Investment Fund</h1>
     <p style="margin:0;max-width:600px;font-size:clamp(18px,1.6vw,22px);line-height:1.55;color:#FAF6EE">A fund that gives Canadian investors access to Everwild’s next chapter, with new Nordic spa locations across British Columbia and Ontario. Capital raised at home, to build at home.</p>
@@ -74,6 +76,7 @@ image-slot::part(frame){background:#C4B9A6}
       <a href="#fund" style="padding:16px 26px;border-radius:2px;border:1px solid #A9C6BA;color:#FAF6EE;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase" style-hover="background:rgba(250,246,238,0.08);color:#FAF6EE">Learn More</a>
     </div>
   </div>
+  <button type="button" onClick="{{ toggleVideo }}" aria-label="{{ videoLabel }}" style="all:unset;cursor:pointer;position:absolute;right:clamp(16px,3vw,40px);bottom:clamp(16px,3vw,40px);z-index:2;width:44px;height:44px;border-radius:50%;border:1px solid rgba(251,244,231,0.6);display:flex;align-items:center;justify-content:center;color:#FBF4E7;font-size:13px;line-height:1" style-hover="background:rgba(251,244,231,0.14)" style-focus="outline:2px solid #FBF4E7;outline-offset:3px">{{ videoIcon }}</button>
 </section>
 
 <section id="fund" style="padding:clamp(80px,10vw,160px) clamp(20px,4vw,56px);background:#FAF6EE;color:#241F21">
@@ -103,8 +106,9 @@ image-slot::part(frame){background:#C4B9A6}
   </div>
 </section>
 
-<section id="market" style="padding:clamp(80px,10vw,160px) clamp(20px,4vw,56px);background:#D6CDBD;color:#241F21">
-  <div style="max-width:1320px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(56px,7vw,112px)">
+<section id="market" style="position:relative;overflow:hidden;padding:clamp(80px,10vw,160px) clamp(20px,4vw,56px);background:#D6CDBD;color:#241F21">
+  <img src="img/sections/wellness.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.1;pointer-events:none">
+  <div style="position:relative;max-width:1320px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(56px,7vw,112px)">
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:clamp(40px,6vw,96px);align-items:start">
       <div style="display:flex;flex-direction:column;gap:20px">
         <span style="font-family:'commuters-sans','Commuters Sans','Jost','Century Gothic','Avenir Next',Arial,sans-serif;font-weight:600;font-size:13.5px;letter-spacing:0.2em;line-height:1.4;text-transform:uppercase;color:#335445">The Market Opportunity</span>
@@ -130,8 +134,10 @@ image-slot::part(frame){background:#C4B9A6}
   </div>
 </section>
 
-<section id="invest" style="padding:clamp(80px,10vw,160px) clamp(20px,4vw,56px);background:#241F21;color:#FAF6EE">
-  <div style="max-width:1320px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(48px,6vw,88px)">
+<section id="invest" style="position:relative;overflow:hidden;padding:clamp(80px,10vw,160px) clamp(20px,4vw,56px);background:#241F21;color:#FAF6EE">
+  <img src="img/sections/investment.jpg" alt="" aria-hidden="true" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none">
+  <div style="position:absolute;inset:0;pointer-events:none;background:rgba(36,31,33,0.88)"></div>
+  <div style="position:relative;max-width:1320px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(48px,6vw,88px)">
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:40px;align-items:end">
       <div style="display:flex;flex-direction:column;gap:20px">
         <span style="font-family:'commuters-sans','Commuters Sans','Jost','Century Gothic','Avenir Next',Arial,sans-serif;font-weight:600;font-size:13.5px;letter-spacing:0.2em;line-height:1.4;text-transform:uppercase;color:#A9C6BA">The Investment</span>
@@ -189,14 +195,18 @@ image-slot::part(frame){background:#C4B9A6}
       <div style="overflow-x:auto;width:100vw;margin-left:calc(50% - 50vw)">
         <div style="display:flex;gap:0;min-width:760px;height:calc(100vh - 74px);min-height:520px">
           <sc-for list="{{ panels }}" as="p" hint-placeholder-count="5">
-            <button onClick="{{ p.select }}" style="all:unset;cursor:pointer;box-sizing:border-box;flex:{{ p.grow }};min-width:0;overflow:hidden;background:{{ p.bg }};color:{{ p.fg }};padding:clamp(24px,3.4vw,56px);display:flex;flex-direction:column;justify-content:space-between;gap:24px;transition:flex .55s cubic-bezier(.2,.7,.2,1)">
-              <div style="display:flex;justify-content:space-between;gap:12px;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;white-space:nowrap">
+            <button onClick="{{ p.select }}" style="all:unset;cursor:pointer;box-sizing:border-box;flex:{{ p.grow }};min-width:0;overflow:hidden;background:{{ p.bg }};color:{{ p.fg }};padding:clamp(24px,3.4vw,56px);display:flex;flex-direction:column;justify-content:space-between;gap:24px;transition:flex .55s cubic-bezier(.2,.7,.2,1);position:relative">
+              <sc-if value="{{ p.photo }}" hint-placeholder-val="{{ false }}">
+                <img src="{{ p.img }}" alt="" aria-hidden="true" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none">
+                <span style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,{{ p.bg }} 0%,{{ p.bgClear }} 24%,{{ p.bgClear }} 40%,{{ p.bg }} 74%)"></span>
+              </sc-if>
+              <div style="position:relative;display:flex;justify-content:space-between;gap:12px;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;white-space:nowrap">
               </div>
               <sc-if value="{{ p.off }}" hint-placeholder-val="{{ true }}">
                 <span style="font-family:'commuters-sans','Commuters Sans','Jost','Century Gothic','Avenir Next',Arial,sans-serif;writing-mode:vertical-rl;transform:rotate(180deg);font-size:clamp(20px,2vw,26px);font-weight:600;letter-spacing:0.12em;text-transform:uppercase;white-space:nowrap">{{ p.name }}</span>
               </sc-if>
               <sc-if value="{{ p.on }}" hint-placeholder-val="{{ false }}">
-                <div style="display:flex;flex-direction:column;gap:16px;min-width:300px;max-width:520px">
+                <div style="position:relative;display:flex;flex-direction:column;gap:16px;min-width:300px;max-width:520px">
                   <span style="font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase">{{ p.where }}</span>
                   <span style="font-family:'commuters-sans','Commuters Sans','Jost','Century Gothic','Avenir Next',Arial,sans-serif;font-size:clamp(32px,4vw,56px);font-weight:600;letter-spacing:0.06em;line-height:1.05;text-transform:uppercase">{{ p.name }}</span>
                   <p style="margin:0;font-size:16px;line-height:1.6">{{ p.desc }}</p>
@@ -210,16 +220,20 @@ image-slot::part(frame){background:#C4B9A6}
     <sc-if value="{{ layoutPanelsMob }}" hint-placeholder-val="{{ false }}">
       <div style="width:100vw;margin-left:calc(50% - 50vw);display:flex;flex-direction:column">
         <sc-for list="{{ mpanels }}" as="p" hint-placeholder-count="5">
-          <button onClick="{{ p.select }}" style="all:unset;cursor:pointer;box-sizing:border-box;height:{{ p.h }};overflow:hidden;background:{{ p.bg }};color:{{ p.fg }};padding:0 20px;display:flex;flex-direction:column;justify-content:{{ p.justify }};gap:12px;transition:height .55s cubic-bezier(.2,.7,.2,1)">
-            <sc-if value="{{ p.on }}" hint-placeholder-val="{{ false }}">
-              <span style="font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase">{{ p.where }}</span>
+          <button onClick="{{ p.select }}" style="all:unset;cursor:pointer;box-sizing:border-box;height:{{ p.h }};overflow:hidden;background:{{ p.bg }};color:{{ p.fg }};padding:0 20px;display:flex;flex-direction:column;justify-content:{{ p.justify }};gap:12px;transition:height .55s cubic-bezier(.2,.7,.2,1);position:relative">
+            <sc-if value="{{ p.photo }}" hint-placeholder-val="{{ false }}">
+              <img src="{{ p.img }}" alt="" aria-hidden="true" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none">
+              <span style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,{{ p.bgClear }} 0%,{{ p.bgClear }} 18%,{{ p.bg }} 62%)"></span>
             </sc-if>
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+            <sc-if value="{{ p.on }}" hint-placeholder-val="{{ false }}">
+              <span style="position:relative;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase">{{ p.where }}</span>
+            </sc-if>
+            <div style="position:relative;display:flex;justify-content:space-between;align-items:center;gap:12px">
               <span style="font-family:'commuters-sans','Commuters Sans','Jost','Century Gothic','Avenir Next',Arial,sans-serif;font-size:{{ p.size }};font-weight:600;letter-spacing:0.08em;line-height:1.05;text-transform:uppercase;transition:font-size .4s">{{ p.name }}</span>
               <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" style="display:block;flex:none"><path d="M1.5 7.5h12"></path><path d="M7.5 1.5v12" style="opacity:{{ p.vOp }};transition:opacity .25s"></path></svg>
             </div>
             <sc-if value="{{ p.on }}" hint-placeholder-val="{{ false }}">
-              <p style="margin:0 0 24px;font-size:16px;line-height:1.6">{{ p.desc }}</p>
+              <p style="position:relative;margin:0 0 24px;font-size:16px;line-height:1.6">{{ p.desc }}</p>
             </sc-if>
           </button>
         </sc-for>
@@ -561,17 +575,15 @@ class Component extends DCLogic {
       this.bio = new IntersectionObserver((es) => es.forEach(en => this.setState({ brandIn: en.isIntersecting })), { threshold: 0.35 });
       this.bio.observe(bEl);
     } else this.setState({ brandIn: true });
-    const vid = this.vid = bEl && bEl.querySelector('video[data-bg-video]');
-    if (vid) {
-      vid.muted = true;
-      if (matchMedia('(prefers-reduced-motion: reduce)').matches) this.setState({ videoOff: true });
-      else {
-        if ('IntersectionObserver' in window) {
-          this.vio = new IntersectionObserver(es => es.forEach(en => en.isIntersecting && !this.state.videoOff ? vid.play().catch(() => {}) : vid.pause()), { threshold: 0.1 });
-          this.vio.observe(vid);
-        } else vid.play().catch(() => {});
-      }
-    }
+    // Background videos: React drops the muted attribute, so set it here. Play only while in view,
+    // never under reduced motion; the pause buttons (WCAG 2.2.2) stop all of them together.
+    this.vids = [...document.querySelectorAll('video[data-bg-video]')];
+    this.vids.forEach(v => { v.muted = true; });
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { this.vids.forEach(v => v.pause()); this.setState({ videoOff: true }); }
+    else if ('IntersectionObserver' in window) {
+      this.vio = new IntersectionObserver(es => es.forEach(en => en.isIntersecting && !this.state.videoOff ? en.target.play().catch(() => {}) : en.target.pause()), { threshold: 0.1 });
+      this.vids.forEach(v => this.vio.observe(v));
+    } else this.vids.forEach(v => v.play().catch(() => {}));
     const el = this.statsRef.current;
     if (!el || !('IntersectionObserver' in window)) return this.run();
     this.io = new IntersectionObserver((es) => { if (es[0].isIntersecting) { this.run(); this.io.disconnect(); } }, { threshold: 0.45 });
@@ -658,7 +670,7 @@ class Component extends DCLogic {
       closeMenu: () => this.setState({ menuOpen: false }),
       burger: this.state.menuOpen ? { a: 'M3 1l16 14', b: 'M3 15L19 1', mid: 0 } : { a: 'M1 1h20', b: 'M1 15h20', mid: 1 },
       layoutPanels: v.layoutPanels && !mob, layoutPanelsMob: v.layoutPanels && mob,
-      mpanels: v.panels.map((p, i) => { const on = i === mp; return { ...p, on, h: mp == null ? '18vh' : (on ? '50vh' : '10vh'), justify: on ? 'flex-end' : 'center', size: on ? '32px' : '20px', vOp: on ? 0 : 1, select: () => this.setState(s => ({ mPanel: s.mPanel === i ? null : i })) }; }),
+      mpanels: v.panels.map((p, i) => { const on = i === mp; return { ...p, on, photo: on && !!p.img, h: mp == null ? '18vh' : (on ? '50vh' : '10vh'), justify: on ? 'flex-end' : 'center', size: on ? '32px' : '20px', vOp: on ? 0 : 1, select: () => this.setState(s => ({ mPanel: s.mPanel === i ? null : i })) }; }),
       storyRef: this.storyRef, teamRef: this.teamRef,
       storyScroll: () => this.onSlide(this.storyRef, 'storyI'), teamScroll: () => this.onSlide(this.teamRef, 'teamI'),
       storyDots: dots('storyI', this.storyRef), teamDots: dots('teamI', this.teamRef),
@@ -751,7 +763,8 @@ class Component extends DCLogic {
       ].map((m, i) => {
         const on = i === (this.state.panel ?? 0);
         const pal = [['#241F21', '#FAF6EE'], ['#FAF6EE', '#241F21'], ['#D6CDBD', '#241F21'], ['#A9C6BA', '#241F21'], ['#6F5940', '#FAF6EE']][i];
-        return { ...m, on, off: !on, grow: on ? '5 1 0%' : '1 1 0%', bg: pal[0], fg: pal[1], select: () => this.setState({ panel: i }) }; }),
+        const img = ['img/settings/urban.jpg', null, 'img/settings/mountain.jpg', 'img/settings/forest.jpg', 'img/settings/prairie.jpg'][i];
+        return { ...m, on, off: !on, img, photo: on && !!img, bgClear: pal[0] + '00', grow: on ? '5 1 0%' : '1 1 0%', bg: pal[0], fg: pal[1], select: () => this.setState({ panel: i }) }; }),
       layoutSplit: this.props.marketsLayout === 'split',
       layoutRoute: this.props.marketsLayout === 'route',
       layoutTabs: this.props.marketsLayout === 'tabs',
@@ -781,7 +794,7 @@ class Component extends DCLogic {
       submit: (e) => this.submitLead(e),
       sending: this.state.sending, sendError: this.state.sendError, submitLabel: this.state.sending ? 'Sending…' : 'Submit',
       reset: () => this.setState({ submitted: false }),
-      toggleVideo: () => { const v = this.vid; if (!v) return; const off = !this.state.videoOff; off ? v.pause() : v.play().catch(() => {}); this.setState({ videoOff: off }); },
+      toggleVideo: () => { const off = !this.state.videoOff; (this.vids || []).forEach(v => { if (off) v.pause(); else if (v.getBoundingClientRect().bottom > 0 && v.getBoundingClientRect().top < innerHeight) v.play().catch(() => {}); }); this.setState({ videoOff: off }); },
       videoLabel: this.state.videoOff ? 'Play background video' : 'Pause background video', videoIcon: this.state.videoOff ? '▶' : '❚❚',
       legalOpen: this.state.legalOpen, legalIcon: this.state.legalOpen ? '−' : '+',
       toggleLegal: () => this.setState(s => ({ legalOpen: !s.legalOpen }))

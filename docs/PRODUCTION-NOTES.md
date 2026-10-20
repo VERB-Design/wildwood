@@ -26,24 +26,28 @@ Copy source: *Copy Deck – Crestwood Investment Fund* (Google Doc 147w3OXPXgrG_
 - Form 2 (bb5df2d0-…, name + email) is unused — likely a newsletter form.
 
 ### Licensing / assets
-- Brand-section video is `Everwild 1920x1080.mp4` from the Canmore lifestyle folder, re-encoded to 540p (7.9 MB). Confirm usage rights for web; the folder also holds Travel Alberta and third-party (Juan Pablo Cortes Duenez, JRNY Media) footage — none of that is used yet, and each needs its own clearance.
+- Hero video is `Element Brand Video.mp4` (Troy's pick, 2026-10-20), full 30.7 s re-encoded to 540p (16 MB). Brand-section video is `Everwild 1920x1080.mp4`, re-encoded to 540p (7.9 MB). Confirm usage rights for web; the folder also holds Travel Alberta and third-party (Juan Pablo Cortes Duenez, JRNY Media) footage — each needs its own clearance. **Now in use:** JRNY Media / Danielle Eagleson stills (Image-14 swimmer behind Market at 10%, Image-5 in the Forest panel, Image-66 under Investment), DJI_0714 aerial (Mountain panel), Banff view2 rendering (Urban panel), Harmony View 1 (Prairie panel). Photographer credit may be contractually required.
 - Map renderings: Fernie (Pacific Render Studio), Harmony (Omega), Banff — credit lines may be required.
 - Raw asset library `/assets/` (3.3 GB) is git-ignored. Never commit it.
 - Mapbox token is public in source; add URL restrictions in the Mapbox account.
 
 ### Performance, unmeasured
+- **Hero video is 16 MB and loads immediately** (`preload="auto"`, above the fold). Heaviest thing on the page; untested on mobile data. Options: trim to a 12–15 s loop (~7 MB), or serve the poster only below 760 px.
 - Brand video 7.9 MB loads with `preload="metadata"` and plays only while in view; not profiled on mobile data. A 720p HEVC/WebM pair would be lighter — no ffmpeg on this machine.
 - Map renderings 330–580 KB each, JPEG only; no WebP/AVIF, no responsive `srcset`.
 
 ### Accessibility
+- Hero copy sits on a forest gradient (0.94 → 0.82 alpha over the bottom 40%), so ivory text holds AA even over the white glacier frames. Pause buttons on the hero and brand videos control both at once.
+- Investment photo sits under 88% charcoal; stat text contrast is effectively unchanged. Market photo is at 10% on beige; charcoal text unaffected.
 - Brand overlay deepened (0.86/0.76/0.55) so ivory body text holds ≥5.5:1 over a white frame wherever text sits; corners fall to 3:1 (no text there). Video is `aria-hidden`, muted, starts paused under `prefers-reduced-motion`, and plays only while in view. Pause/play button (44 px, bottom-right, labelled) added for WCAG 2.2.2 — resolved 2026-10-20.
 - New Market section: charcoal on beige and forest eyebrow on beige — standard brand pairings; not separately audited.
 - **Form field and investor-chip borders at 40% opacity** (Troy, 2026-10-20) — about 1.6:1 against the cream card, below the 3:1 WCAG 1.4.11 minimum for input boundaries. Fields still read as fields (white fill against cream, labels above), and the selected chip is solid forest. Client to accept, or go to ~80% to pass.
 - Form error message uses `role="alert"`; colour #8A3B2E on cream not contrast-checked.
 
 ### Media requests not actioned
-- Hero `<video recommended>` and Investment `<background image>` in the deck — not built; assets exist in `/assets/`.
-- Settings cards `<image>` and in-development map galleries — no imagery supplied.
+- Coastal settings panel has no image (no coastal / Sooke Point imagery supplied); stays solid cream.
+- In-development map galleries and team portraits — no imagery supplied.
+- **Settings imagery is illustrative**: Urban uses a Banff rendering, Mountain/Forest use Canmore photos, Prairie uses Harmony. None of the panels is captioned, but the client should be comfortable with renderings standing in for a setting.
 
 ### Reproducibility
 - Renderings: `sips -s format jpeg -s formatOptions 72 -Z 1600`. Video: `avconvert --preset Preset960x540`; poster via `qlmanage -t -s 1280`.
