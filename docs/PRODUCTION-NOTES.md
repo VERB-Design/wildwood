@@ -26,7 +26,7 @@ Copy source: *Copy Deck – Crestwood Investment Fund* (Google Doc 147w3OXPXgrG_
 - Form 2 (bb5df2d0-…, name + email) is unused — likely a newsletter form.
 
 ### Licensing / assets
-- Hero video is `Element Brand Video.mp4` (Troy's pick, 2026-10-20), full 30.7 s re-encoded to 540p (16 MB). Brand-section video is `Everwild 1920x1080.mp4`, re-encoded to 540p (7.9 MB). Confirm usage rights for web; the folder also holds Travel Alberta and third-party (Juan Pablo Cortes Duenez, JRNY Media) footage — each needs its own clearance. **Now in use:** JRNY Media / Danielle Eagleson stills (Image-14 swimmer behind Market at 10%, Image-66 under Investment), Photographer credit may be contractually required.
+- Hero video is `Element Brand Video.mp4` (Troy's pick, 2026-10-20), full 30.7 s re-encoded to 540p (16 MB). Brand-section video is `Everwild 1920x1080.mp4`, re-encoded to 540p (7.9 MB). Confirm usage rights for web; the folder also holds Travel Alberta and third-party (Juan Pablo Cortes Duenez, JRNY Media) footage — each needs its own clearance. **Now in use:** JRNY Media / Danielle Eagleson stills (Image-75 behind Get in Touch under 80% charcoal, Image-14 swimmer behind Market at 10%, Image-66 under Investment), Photographer credit may be contractually required.
 - Map renderings: Fernie (Pacific Render Studio), Harmony (Omega), Banff — credit lines may be required.
 - Raw asset library `/assets/` (3.3 GB) is git-ignored. Never commit it.
 - Mapbox token is public in source; add URL restrictions in the Mapbox account.
@@ -48,10 +48,10 @@ Copy source: *Copy Deck – Crestwood Investment Fund* (Google Doc 147w3OXPXgrG_
 ### Media requests not actioned
 - In-development map galleries and team portraits — no imagery supplied.
 - **Settings imagery — Unsplash License** (free commercial use, no attribution required; credit is courteous). Replaced the Everwild renderings/photos 2026-10-20 at Troy's request:
-  - Urban — Toronto Islands, ON — @rkidger — unsplash.com/photos/V4S9FZmvYvM (CN Tower centred, object-position 51%)
+  - Urban — Toronto, ON (sunny, from the islands) — @hamednrg — unsplash.com/photos/noHMMrIbkAE — 2600 px; tower at 41% of frame, object-position 30% centres it in the open card
   - Coastal — Juan de Fuca, BC — @mattdren — unsplash.com/photos/rRwWXI_PeGg
   - Mountain — Banff, AB — @nunzg — unsplash.com/photos/BP0on2uI8bM
-  - Forest — mountain valley forest, location not listed (reads as the Rockies) — @benkupke — unsplash.com/photos/RX0v8NDTUNs
+  - Forest — Algonquin Park, ON — @arianka — unsplash.com/photos/lJUPztX1SjI — 2300 px, 768 KB (busy texture; heaviest settings image)
   - Prairie — Canada (location unconfirmed) — @sanateddy — unsplash.com/photos/tO0HubKpo70
   Unsplash License bars selling the photos unaltered or using them to build a competing service; fine for this use. Stock, not Everwild properties — no captions imply otherwise.
 
