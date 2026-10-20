@@ -37,6 +37,7 @@ Copy source: *Copy Deck – Crestwood Investment Fund* (Google Doc 147w3OXPXgrG_
 - Map renderings 330–580 KB each, JPEG only; no WebP/AVIF, no responsive `srcset`.
 
 ### Accessibility
+- **Settings panels** (2026-10-20, Troy): photo on every card, open or collapsed; panel colours removed; one black gradient, 50% at the bottom to 0 at the top; all type cream with a soft text-shadow. **Contrast is image-dependent and not AA-guaranteed** — weakest on the Coastal fog and the Prairie sky, where cream labels sit on near-white. Body copy in the open card sits in the darker lower half. If a client audit flags it, deepen the gradient's foot or give the copy block its own scrim.
 - Hero copy sits on a forest gradient (0.94 → 0.82 alpha over the bottom 40%), so ivory text holds AA even over the white glacier frames. Pause buttons on the hero and brand videos control both at once.
 - Investment photo sits under 88% charcoal; stat text contrast is effectively unchanged. Market photo is at 10% on beige; charcoal text unaffected.
 - Brand overlay deepened (0.86/0.76/0.55) so ivory body text holds ≥5.5:1 over a white frame wherever text sits; corners fall to 3:1 (no text there). Video is `aria-hidden`, muted, starts paused under `prefers-reduced-motion`, and plays only while in view. Pause/play button (44 px, bottom-right, labelled) added for WCAG 2.2.2 — resolved 2026-10-20.
@@ -47,10 +48,10 @@ Copy source: *Copy Deck – Crestwood Investment Fund* (Google Doc 147w3OXPXgrG_
 ### Media requests not actioned
 - In-development map galleries and team portraits — no imagery supplied.
 - **Settings imagery — Unsplash License** (free commercial use, no attribution required; credit is courteous). Replaced the Everwild renderings/photos 2026-10-20 at Troy's request:
-  - Urban — Toronto, ON — @andrefrueh — unsplash.com/photos/62UWrTdRq78
+  - Urban — Toronto Islands, ON — @rkidger — unsplash.com/photos/V4S9FZmvYvM (CN Tower centred, object-position 51%)
   - Coastal — Juan de Fuca, BC — @mattdren — unsplash.com/photos/rRwWXI_PeGg
   - Mountain — Banff, AB — @nunzg — unsplash.com/photos/BP0on2uI8bM
-  - Forest — Canada (Ontario-style shield lake, location unconfirmed) — @arianka — unsplash.com/photos/t9-ArSF_sE8
+  - Forest — mountain valley forest, location not listed (reads as the Rockies) — @benkupke — unsplash.com/photos/RX0v8NDTUNs
   - Prairie — Canada (location unconfirmed) — @sanateddy — unsplash.com/photos/tO0HubKpo70
   Unsplash License bars selling the photos unaltered or using them to build a competing service; fine for this use. Stock, not Everwild properties — no captions imply otherwise.
 

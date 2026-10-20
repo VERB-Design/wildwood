@@ -195,15 +195,13 @@ image-slot::part(frame){background:#C4B9A6}
       <div style="overflow-x:auto;width:100vw;margin-left:calc(50% - 50vw)">
         <div style="display:flex;gap:0;min-width:760px;height:calc(100vh - 74px);min-height:520px">
           <sc-for list="{{ panels }}" as="p" hint-placeholder-count="5">
-            <button onClick="{{ p.select }}" style="all:unset;cursor:pointer;box-sizing:border-box;flex:{{ p.grow }};min-width:0;overflow:hidden;background:{{ p.bg }};color:{{ p.fg }};padding:clamp(24px,3.4vw,56px);display:flex;flex-direction:column;justify-content:space-between;gap:24px;transition:flex .55s cubic-bezier(.2,.7,.2,1);position:relative">
-              <sc-if value="{{ p.photo }}" hint-placeholder-val="{{ false }}">
-                <img src="{{ p.img }}" alt="" aria-hidden="true" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none">
-                <span style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,{{ p.bg }} 0%,{{ p.bgClear }} 15%,{{ p.bgClear }} 44%,{{ p.bg }} 76%)"></span>
-              </sc-if>
+            <button onClick="{{ p.select }}" style="all:unset;cursor:pointer;box-sizing:border-box;flex:{{ p.grow }};min-width:0;overflow:hidden;background:{{ p.bg }};color:{{ p.fg }};padding:clamp(24px,3.4vw,56px);display:flex;flex-direction:column;justify-content:space-between;gap:24px;transition:flex .55s cubic-bezier(.2,.7,.2,1);position:relative;text-shadow:0 1px 14px rgba(0,0,0,0.45)">
+              <img src="{{ p.img }}" alt="" aria-hidden="true" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ p.pos }};pointer-events:none">
+              <span style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,rgba(0,0,0,0) 100%)"></span>
               <div style="position:relative;display:flex;justify-content:space-between;gap:12px;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;white-space:nowrap">
               </div>
               <sc-if value="{{ p.off }}" hint-placeholder-val="{{ true }}">
-                <span style="font-family:'commuters-sans','Commuters Sans','Jost','Century Gothic','Avenir Next',Arial,sans-serif;writing-mode:vertical-rl;transform:rotate(180deg);font-size:clamp(20px,2vw,26px);font-weight:600;letter-spacing:0.12em;text-transform:uppercase;white-space:nowrap">{{ p.name }}</span>
+                <span style="position:relative;font-family:'commuters-sans','Commuters Sans','Jost','Century Gothic','Avenir Next',Arial,sans-serif;writing-mode:vertical-rl;transform:rotate(180deg);font-size:clamp(20px,2vw,26px);font-weight:600;letter-spacing:0.12em;text-transform:uppercase;white-space:nowrap">{{ p.name }}</span>
               </sc-if>
               <sc-if value="{{ p.on }}" hint-placeholder-val="{{ false }}">
                 <div style="position:relative;display:flex;flex-direction:column;gap:16px;min-width:300px;max-width:520px">
@@ -220,11 +218,9 @@ image-slot::part(frame){background:#C4B9A6}
     <sc-if value="{{ layoutPanelsMob }}" hint-placeholder-val="{{ false }}">
       <div style="width:100vw;margin-left:calc(50% - 50vw);display:flex;flex-direction:column">
         <sc-for list="{{ mpanels }}" as="p" hint-placeholder-count="5">
-          <button onClick="{{ p.select }}" style="all:unset;cursor:pointer;box-sizing:border-box;height:{{ p.h }};overflow:hidden;background:{{ p.bg }};color:{{ p.fg }};padding:0 20px;display:flex;flex-direction:column;justify-content:{{ p.justify }};gap:12px;transition:height .55s cubic-bezier(.2,.7,.2,1);position:relative">
-            <sc-if value="{{ p.photo }}" hint-placeholder-val="{{ false }}">
-              <img src="{{ p.img }}" alt="" aria-hidden="true" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none">
-              <span style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to bottom,{{ p.bgClear }} 0%,{{ p.bgClear }} 18%,{{ p.bg }} 62%)"></span>
-            </sc-if>
+          <button onClick="{{ p.select }}" style="all:unset;cursor:pointer;box-sizing:border-box;height:{{ p.h }};overflow:hidden;background:{{ p.bg }};color:{{ p.fg }};padding:0 20px;display:flex;flex-direction:column;justify-content:{{ p.justify }};gap:12px;transition:height .55s cubic-bezier(.2,.7,.2,1);position:relative;text-shadow:0 1px 14px rgba(0,0,0,0.45)">
+            <img src="{{ p.img }}" alt="" aria-hidden="true" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ p.pos }};pointer-events:none">
+            <span style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,rgba(0,0,0,0) 100%)"></span>
             <sc-if value="{{ p.on }}" hint-placeholder-val="{{ false }}">
               <span style="position:relative;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase">{{ p.where }}</span>
             </sc-if>
@@ -670,7 +666,7 @@ class Component extends DCLogic {
       closeMenu: () => this.setState({ menuOpen: false }),
       burger: this.state.menuOpen ? { a: 'M3 1l16 14', b: 'M3 15L19 1', mid: 0 } : { a: 'M1 1h20', b: 'M1 15h20', mid: 1 },
       layoutPanels: v.layoutPanels && !mob, layoutPanelsMob: v.layoutPanels && mob,
-      mpanels: v.panels.map((p, i) => { const on = i === mp; return { ...p, on, photo: on && !!p.img, h: mp == null ? '18vh' : (on ? '50vh' : '10vh'), justify: on ? 'flex-end' : 'center', size: on ? '32px' : '20px', vOp: on ? 0 : 1, select: () => this.setState(s => ({ mPanel: s.mPanel === i ? null : i })) }; }),
+      mpanels: v.panels.map((p, i) => { const on = i === mp; return { ...p, on, h: mp == null ? '18vh' : (on ? '50vh' : '10vh'), justify: on ? 'flex-end' : 'center', size: on ? '32px' : '20px', vOp: on ? 0 : 1, select: () => this.setState(s => ({ mPanel: s.mPanel === i ? null : i })) }; }),
       storyRef: this.storyRef, teamRef: this.teamRef,
       storyScroll: () => this.onSlide(this.storyRef, 'storyI'), teamScroll: () => this.onSlide(this.teamRef, 'teamI'),
       storyDots: dots('storyI', this.storyRef), teamDots: dots('teamI', this.teamRef),
@@ -762,10 +758,10 @@ class Component extends DCLogic {
         { name: 'Prairie', where: 'Edmonton · Saskatoon · Winnipeg', desc: 'Wide skies and cozy winters. Heated pools and saunas designed for prairie cold, rooted in the river valleys of Western Canada.' }
       ].map((m, i) => {
         const on = i === (this.state.panel ?? 0);
-        const pal = [['#241F21', '#FAF6EE'], ['#FAF6EE', '#241F21'], ['#D6CDBD', '#241F21'], ['#A9C6BA', '#241F21'], ['#6F5940', '#FAF6EE']][i];
         // Settings imagery: Unsplash License (credits in docs/PRODUCTION-NOTES.md)
         const img = ['urban', 'coastal', 'mountain', 'forest', 'prairie'].map(n => 'img/settings/' + n + '.jpg')[i];
-        return { ...m, on, off: !on, img, photo: on && !!img, bgClear: pal[0] + '00', grow: on ? '5 1 0%' : '1 1 0%', bg: pal[0], fg: pal[1], select: () => this.setState({ panel: i }) }; }),
+        const pos = ['51% 50%', '50% 50%', '50% 45%', '50% 55%', '50% 50%'][i];
+        return { ...m, on, off: !on, img, pos, grow: on ? '5 1 0%' : '1 1 0%', bg: '#241F21', fg: '#FAF6EE', select: () => this.setState({ panel: i }) }; }),
       layoutSplit: this.props.marketsLayout === 'split',
       layoutRoute: this.props.marketsLayout === 'route',
       layoutTabs: this.props.marketsLayout === 'tabs',
