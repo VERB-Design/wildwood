@@ -80,8 +80,8 @@ image-slot::part(frame){background:#C4B9A6}
   <button type="button" onClick="{{ toggleVideo }}" aria-label="{{ videoLabel }}" style="all:unset;cursor:pointer;position:absolute;right:clamp(16px,3vw,40px);bottom:clamp(16px,3vw,40px);z-index:2;width:44px;height:44px;border-radius:50%;border:1px solid rgba(251,244,231,0.6);display:flex;align-items:center;justify-content:center;color:#FBF4E7;font-size:13px;line-height:1" style-hover="background:rgba(251,244,231,0.14)" style-focus="outline:2px solid #FBF4E7;outline-offset:3px">{{ videoIcon }}</button>
 </section>
 
-<div data-sizzle role="dialog" aria-modal="true" aria-label="Crestwood Investment Fund film" onClick="{{ sizzleBackdrop }}" style="position:fixed;inset:0;z-index:100;display:{{ sizzleDisp }};align-items:center;justify-content:center;background:rgba(0,0,0,0.9);padding:clamp(16px,4vw,64px);box-sizing:border-box">
-  <div style="position:relative;width:min(100%, calc((100vh - 160px) * 16 / 9));aspect-ratio:16/9;background:#000">
+<div data-sizzle role="dialog" aria-modal="true" aria-label="Crestwood Investment Fund film" onClick="{{ sizzleBackdrop }}" style="position:fixed;inset:0;z-index:100;display:{{ sizzleDisp }};align-items:center;justify-content:center;background:rgba(0,0,0,0.9);padding:clamp(16px,4vw,64px);box-sizing:border-box;opacity:{{ sizzleOp }};transition:opacity {{ sizzleFade }};pointer-events:{{ sizzlePe }}">
+  <div style="position:relative;width:min(100%, calc((100vh - 160px) * 16 / 9));aspect-ratio:16/9;background:#000;opacity:{{ sizzleOp }};transform:{{ sizzleTf }};transition:{{ sizzleMove }};box-shadow:0 40px 120px rgba(0,0,0,0.5)">
     <video data-sizzle-video controls playsinline preload="none" poster="media/crestwood-sizzle-poster.jpg" style="display:block;width:100%;height:100%;background:#000"><source src="media/crestwood-sizzle.mp4" type="video/mp4"></video>
     <button type="button" data-sizzle-close onClick="{{ closeSizzle }}" aria-label="Close video" style="all:unset;cursor:pointer;position:absolute;top:-56px;right:0;width:44px;height:44px;border-radius:50%;border:1px solid rgba(250,246,238,0.6);display:flex;align-items:center;justify-content:center;color:#FAF6EE" style-hover="background:rgba(250,246,238,0.14)" style-focus="outline:2px solid #FAF6EE;outline-offset:3px"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12"></path></svg></button>
   </div>
@@ -654,18 +654,28 @@ class Component extends DCLogic {
         if (ev.shiftKey && i <= 0) { ev.preventDefault(); f[f.length - 1].focus(); } else if (!ev.shiftKey && (i === -1 || i === f.length - 1)) { ev.preventDefault(); f[0].focus(); } }
     };
     document.addEventListener('keydown', this.onSizzleKey);
-    this.setState({ sizzleOpen: true }, () => setTimeout(() => document.querySelector('[data-sizzle-close]')?.focus(), 30));
+    clearTimeout(this.sizzleT);
+    // mount at the start state, then flip to "in" on the next frame so the transition runs
+    this.setState({ sizzleOpen: true, sizzleIn: false }, () => requestAnimationFrame(() => requestAnimationFrame(() => {
+      this.setState({ sizzleIn: true }); setTimeout(() => document.querySelector('[data-sizzle-close]')?.focus(), 30); })));
   }
   closeSizzle() {
-    const v = document.querySelector('[data-sizzle-video]'); if (v) v.pause();
-    document.documentElement.style.overflow = '';
+    if (!this.state.sizzleOpen || !this.state.sizzleIn) return;
+    const v = document.querySelector('[data-sizzle-video]');
     document.removeEventListener('keydown', this.onSizzleKey);
-    this.setState({ sizzleOpen: false }, () => {
-      if (!this.state.videoOff) (this.vids || []).forEach(x => { const r = x.getBoundingClientRect(); if (r.bottom > 0 && r.top < innerHeight) x.play().catch(() => {}); });
-      this.sizzleReturn && this.sizzleReturn.focus();
-    });
+    this.setState({ sizzleIn: false });
+    clearTimeout(this.sizzleT);
+    this.sizzleT = setTimeout(() => {
+      if (v) v.pause();
+      document.documentElement.style.overflow = '';
+      this.setState({ sizzleOpen: false }, () => {
+        if (!this.state.videoOff) (this.vids || []).forEach(x => { const r = x.getBoundingClientRect(); if (r.bottom > 0 && r.top < innerHeight) x.play().catch(() => {}); });
+        this.sizzleReturn && this.sizzleReturn.focus();
+      });
+    }, this.reducedMotion() ? 160 : 420);
   }
-  componentWillUnmount() { document.removeEventListener('keydown', this.onSizzleKey); this.hro && this.hro.disconnect(); removeEventListener("resize", this.onTeamResize); clearTimeout(this.teamT); this.mql && this.mql.removeEventListener('change', this.onMq); cancelAnimationFrame(this.raf); this.io && this.io.disconnect(); this.bio && this.bio.disconnect(); this.rio && this.rio.disconnect(); this.vio && this.vio.disconnect(); clearTimeout(this.revealT); }
+  reducedMotion() { return matchMedia('(prefers-reduced-motion: reduce)').matches; }
+  componentWillUnmount() { clearTimeout(this.sizzleT); document.removeEventListener('keydown', this.onSizzleKey); this.hro && this.hro.disconnect(); removeEventListener("resize", this.onTeamResize); clearTimeout(this.teamT); this.mql && this.mql.removeEventListener('change', this.onMq); cancelAnimationFrame(this.raf); this.io && this.io.disconnect(); this.bio && this.bio.disconnect(); this.rio && this.rio.disconnect(); this.vio && this.vio.disconnect(); clearTimeout(this.revealT); }
   setupReveals() {
     if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const ease = 'cubic-bezier(.2,.7,.2,1)';
@@ -850,6 +860,10 @@ class Component extends DCLogic {
       openSizzle: (e) => this.openSizzle(e), closeSizzle: () => this.closeSizzle(),
       sizzleBackdrop: (e) => { if (e.target === e.currentTarget) this.closeSizzle(); },
       sizzleDisp: this.state.sizzleOpen ? 'flex' : 'none',
+      sizzleOp: this.state.sizzleIn ? 1 : 0, sizzlePe: this.state.sizzleIn ? 'auto' : 'none',
+      sizzleTf: this.state.sizzleIn || this.reducedMotion() ? 'none' : 'translateY(24px) scale(0.96)',
+      sizzleFade: this.reducedMotion() ? '.15s linear' : (this.state.sizzleIn ? '.45s cubic-bezier(.2,.7,.2,1)' : '.35s ease'),
+      sizzleMove: this.reducedMotion() ? 'opacity .15s linear' : (this.state.sizzleIn ? 'opacity .55s ease .08s, transform .7s cubic-bezier(.2,.7,.2,1) .08s' : 'opacity .3s ease, transform .4s ease'),
       legalOpen: this.state.legalOpen, legalIcon: this.state.legalOpen ? '−' : '+',
       toggleLegal: () => this.setState(s => ({ legalOpen: !s.legalOpen }))
     };
