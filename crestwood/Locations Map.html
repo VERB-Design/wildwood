@@ -91,6 +91,7 @@
   .more{align-self:flex-start;font:600 12px/1.4 var(--b);letter-spacing:.2em;text-transform:uppercase;color:var(--forest);text-decoration:underline;text-underline-offset:4px;display:flex;gap:8px}
   .more:hover{color:var(--char)}
   .gal image-slot{position:absolute;inset:0;color:#C4B9A6}
+  .gal .concept{position:absolute;top:12px;left:12px;z-index:3;padding:6px 10px;background:rgba(36,31,33,.78);color:var(--cream);font:600 10px/1 var(--b);letter-spacing:.18em;text-transform:uppercase;pointer-events:none}
   .gal img.photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
   .gal.full img.photo{object-fit:contain}
   .gal image-slot::part(empty),.gal image-slot::part(ring){display:none}
@@ -137,6 +138,7 @@
   </aside>
   <section class="modal" id="modal" aria-hidden="true">
     <div class="gal" id="gal">
+      <span class="concept" id="concept" hidden>Concept rendering</span>
       <div class="track" id="track">
         <div class="ph"><image-slot id="m-a" shape="rect" placeholder=""></image-slot></div>
         <div class="ph"><image-slot id="m-b" shape="rect" placeholder=""></image-slot></div>
@@ -179,13 +181,13 @@
     { done: true, slug: 'harmony', imgs: [['img/map/harmony-a.jpg', 'Rendering: Harmony outdoor pools'], ['img/map/harmony-b.jpg', 'Rendering: Harmony relaxation pool'], ['img/map/harmony-c.jpg', 'Rendering: Harmony sauna']], name: 'Harmony', prov: 'AB', sub: 'Targeted opening: Q1 2028', ll: [-114.4036, 51.1124], z: 12, tag: 'Alberta · Under construction',
       desc: 'A lakeside community west of Calgary, at the edge of the foothills on the way to the Rockies.',
       facts: [['Status', 'Under construction'], ['Targeted opening', 'Q1 2028'], ['Province', 'Alberta']] },
-    { done: false, slug: 'sooke', name: 'Vancouver Island', prov: 'BC', sub: 'Everwild Sooke Point · In development', ll: [-123.7097, 48.3420], z: 12, tag: 'British Columbia · In development',
+    { done: false, slug: 'sooke', concept: true, imgs: [['img/map/sooke-a.jpg', 'Concept rendering: Infinity pool on the cliffs above the Strait of Juan de Fuca'], ['img/map/sooke-b.jpg', 'Concept rendering: Sauna looking out over the ocean at sunset'], ['img/map/sooke-c.jpg', 'Concept rendering: Arrival path to Everwild Sooke Point']], name: 'Vancouver Island', prov: 'BC', sub: 'Everwild Sooke Point · In development', ll: [-123.7097, 48.3420], z: 12, tag: 'British Columbia · In development',
       desc: 'Everwild Sooke Point, on the southern tip of Vancouver Island, where the rainforest meets the Strait of Juan de Fuca.',
       facts: [['Status', 'In development'], ['Region', 'Vancouver Island'], ['Address', '1000 Sooke Point Place & 1000 Silver Spray Dr, Sooke, BC V9Z 1N8']] },
-    { done: false, slug: 'brew-creek', name: 'Vancouver Mainland', prov: 'BC', sub: 'Everwild Brew Creek · In development', ll: [-123.1297, 50.0127], z: 12, tag: 'British Columbia · In development',
+    { done: false, slug: 'brew-creek', concept: true, imgs: [['img/map/brew-creek-a.jpg', 'Concept rendering: Forest thermal pools from above'], ['img/map/brew-creek-b.jpg', 'Concept rendering: Sauna overlooking the forest'], ['img/map/brew-creek-c.jpg', 'Concept rendering: Arrival path through the snow']], name: 'Vancouver Mainland', prov: 'BC', sub: 'Everwild Brew Creek · In development', ll: [-123.1297, 50.0127], z: 12, tag: 'British Columbia · In development',
       desc: 'Everwild Brew Creek, in the forest just south of Whistler along the Sea-to-Sky corridor.',
       facts: [['Status', 'In development'], ['Region', 'Vancouver Mainland'], ['Address', '1 Brew Creek Rd, Whistler, BC V8E 0A7']] },
-    { done: false, slug: 'lake-simcoe', name: 'Rural Ontario', prov: 'ON', sub: 'Everwild Lake Simcoe · In development', ll: [-79.3620, 44.3216], z: 12, tag: 'Ontario · In development',
+    { done: false, slug: 'lake-simcoe', concept: true, imgs: [['img/map/lake-simcoe-a.jpg', 'Concept rendering: Estate and pools from above'], ['img/map/lake-simcoe-b.jpg', 'Concept rendering: Lakeside sauna and dock'], ['img/map/lake-simcoe-c.jpg', 'Concept rendering: Sauna with a view over the lake']], name: 'Rural Ontario', prov: 'ON', sub: 'Everwild Lake Simcoe · In development', ll: [-79.3620, 44.3216], z: 12, tag: 'Ontario · In development',
       desc: 'Everwild Lake Simcoe, on the south shore of the lake, about an hour north of Toronto.',
       facts: [['Status', 'In development'], ['Region', 'Rural Ontario'], ['Address', '55 Hedge Rd, Georgina, ON L0E 1L0']] },
     { done: false, slug: 'toronto', name: 'Downtown Toronto', prov: 'ON', sub: 'Site TBC · In development', ll: [-79.383, 43.651], z: 11, tag: 'Ontario · In development',
@@ -312,6 +314,7 @@
       n.id = 'loc-' + s + '-' + p.slug;
       old.replaceWith(n);
     });
+    document.getElementById('concept').hidden = !p.concept;
     document.getElementById('more').href = p.url || '#';
     go(0);
     modal.classList.add('show'); modal.setAttribute('aria-hidden', 'false'); document.body.classList.add('open');

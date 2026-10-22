@@ -74,11 +74,18 @@ image-slot::part(frame){background:#C4B9A6}
     <p style="margin:0;max-width:800px;font-size:clamp(18px,1.6vw,22px);line-height:1.55;color:#FAF6EE">A fund that gives Canadian investors access to Everwild’s next chapter: new thermal spa destinations across British Columbia and Ontario. Built from experience, invested for the long term.</p>
     <div style="display:flex;gap:12px;flex-wrap:wrap">
       <a href="#contact" style="padding:16px 26px;border-radius:2px;background:#FAF6EE;color:#241F21;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase" style-hover="background:#A9C6BA;color:#241F21">Request Details</a>
-      <a href="#fund" style="padding:16px 26px;border-radius:2px;border:1px solid #A9C6BA;color:#FAF6EE;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase" style-hover="background:rgba(250,246,238,0.08);color:#FAF6EE">Learn More</a>
+      <button type="button" onClick="{{ openSizzle }}" aria-haspopup="dialog" style="all:unset;cursor:pointer;box-sizing:border-box;display:inline-flex;align-items:center;gap:10px;padding:16px 26px;border-radius:2px;border:1px solid #A9C6BA;color:#FAF6EE;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase" style-hover="background:rgba(250,246,238,0.08);color:#FAF6EE" style-focus="outline:2px solid #FAF6EE;outline-offset:3px"><svg width="10" height="12" viewBox="0 0 10 12" aria-hidden="true" style="display:block;flex:none"><path d="M0 0l10 6-10 6z" fill="currentColor"></path></svg>Learn More</button>
     </div>
   </div>
   <button type="button" onClick="{{ toggleVideo }}" aria-label="{{ videoLabel }}" style="all:unset;cursor:pointer;position:absolute;right:clamp(16px,3vw,40px);bottom:clamp(16px,3vw,40px);z-index:2;width:44px;height:44px;border-radius:50%;border:1px solid rgba(251,244,231,0.6);display:flex;align-items:center;justify-content:center;color:#FBF4E7;font-size:13px;line-height:1" style-hover="background:rgba(251,244,231,0.14)" style-focus="outline:2px solid #FBF4E7;outline-offset:3px">{{ videoIcon }}</button>
 </section>
+
+<div data-sizzle role="dialog" aria-modal="true" aria-label="Crestwood Investment Fund film" onClick="{{ sizzleBackdrop }}" style="position:fixed;inset:0;z-index:100;display:{{ sizzleDisp }};align-items:center;justify-content:center;background:rgba(0,0,0,0.9);padding:clamp(16px,4vw,64px);box-sizing:border-box">
+  <div style="position:relative;width:min(100%, calc((100vh - 160px) * 16 / 9));aspect-ratio:16/9;background:#000">
+    <video data-sizzle-video controls playsinline preload="none" poster="media/crestwood-sizzle-poster.jpg" style="display:block;width:100%;height:100%;background:#000"><source src="media/crestwood-sizzle.mp4" type="video/mp4"></video>
+    <button type="button" data-sizzle-close onClick="{{ closeSizzle }}" aria-label="Close video" style="all:unset;cursor:pointer;position:absolute;top:-56px;right:0;width:44px;height:44px;border-radius:50%;border:1px solid rgba(250,246,238,0.6);display:flex;align-items:center;justify-content:center;color:#FAF6EE" style-hover="background:rgba(250,246,238,0.14)" style-focus="outline:2px solid #FAF6EE;outline-offset:3px"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12"></path></svg></button>
+  </div>
+</div>
 
 <section id="fund" style="padding:clamp(80px,10vw,160px) clamp(20px,4vw,56px);background:#FAF6EE;color:#241F21">
   <div style="max-width:1320px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(56px,7vw,112px)">
@@ -580,9 +587,9 @@ class Component extends DCLogic {
     // Autoplay for everyone (Troy, 2026-10-22); the pause buttons are the opt-out.
     this.vids.forEach(v => { v.muted = v.defaultMuted = true; v.loop = true; v.autoplay = true; v.playsInline = true;
       ['muted', 'loop', 'autoplay', 'playsinline'].forEach(a => v.setAttribute(a, ''));
-      v.addEventListener('ended', () => { if (!this.state.videoOff) { v.currentTime = 0; v.play().catch(() => {}); } }); });
+      v.addEventListener('ended', () => { if (!this.state.videoOff && !this.state.sizzleOpen) { v.currentTime = 0; v.play().catch(() => {}); } }); });
     if ('IntersectionObserver' in window) {
-      this.vio = new IntersectionObserver(es => es.forEach(en => en.isIntersecting && !this.state.videoOff ? en.target.play().catch(() => {}) : en.target.pause()), { threshold: 0.1 });
+      this.vio = new IntersectionObserver(es => es.forEach(en => en.isIntersecting && !this.state.videoOff && !this.state.sizzleOpen ? en.target.play().catch(() => {}) : en.target.pause()), { threshold: 0.1 });
       this.vids.forEach(v => this.vio.observe(v));
     } else this.vids.forEach(v => v.play().catch(() => {}));
     const el = this.statsRef.current;
@@ -634,7 +641,31 @@ class Component extends DCLogic {
     this.teamT = setTimeout(() => { const b = this.teamAbs(); if (b < 7 || b >= 14) this.teamJump(7 + (((b % 7) + 7) % 7)); }, 160);
   }
   measureTeam() { this.teamJump(7 + (this.state.teamI || 0)); }
-  componentWillUnmount() { this.hro && this.hro.disconnect(); removeEventListener("resize", this.onTeamResize); clearTimeout(this.teamT); this.mql && this.mql.removeEventListener('change', this.onMq); cancelAnimationFrame(this.raf); this.io && this.io.disconnect(); this.bio && this.bio.disconnect(); this.rio && this.rio.disconnect(); this.vio && this.vio.disconnect(); clearTimeout(this.revealT); }
+  // Sizzle film modal: play synchronously inside the click so sound is allowed; pause every background film while open
+  openSizzle(e) {
+    this.sizzleReturn = e && e.currentTarget;
+    (this.vids || []).forEach(v => v.pause());
+    const v = document.querySelector('[data-sizzle-video]');
+    if (v) { v.muted = false; v.volume = 1; try { v.currentTime = 0; } catch (_) {} v.play().catch(() => {}); }
+    document.documentElement.style.overflow = 'hidden';
+    this.onSizzleKey = (ev) => {
+      if (ev.key === 'Escape') { ev.preventDefault(); this.closeSizzle(); return; }
+      if (ev.key === 'Tab') { const d = document.querySelector('[data-sizzle]'); const f = [...d.querySelectorAll('video, button')]; const i = f.indexOf(document.activeElement);
+        if (ev.shiftKey && i <= 0) { ev.preventDefault(); f[f.length - 1].focus(); } else if (!ev.shiftKey && (i === -1 || i === f.length - 1)) { ev.preventDefault(); f[0].focus(); } }
+    };
+    document.addEventListener('keydown', this.onSizzleKey);
+    this.setState({ sizzleOpen: true }, () => setTimeout(() => document.querySelector('[data-sizzle-close]')?.focus(), 30));
+  }
+  closeSizzle() {
+    const v = document.querySelector('[data-sizzle-video]'); if (v) v.pause();
+    document.documentElement.style.overflow = '';
+    document.removeEventListener('keydown', this.onSizzleKey);
+    this.setState({ sizzleOpen: false }, () => {
+      if (!this.state.videoOff) (this.vids || []).forEach(x => { const r = x.getBoundingClientRect(); if (r.bottom > 0 && r.top < innerHeight) x.play().catch(() => {}); });
+      this.sizzleReturn && this.sizzleReturn.focus();
+    });
+  }
+  componentWillUnmount() { document.removeEventListener('keydown', this.onSizzleKey); this.hro && this.hro.disconnect(); removeEventListener("resize", this.onTeamResize); clearTimeout(this.teamT); this.mql && this.mql.removeEventListener('change', this.onMq); cancelAnimationFrame(this.raf); this.io && this.io.disconnect(); this.bio && this.bio.disconnect(); this.rio && this.rio.disconnect(); this.vio && this.vio.disconnect(); clearTimeout(this.revealT); }
   setupReveals() {
     if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const ease = 'cubic-bezier(.2,.7,.2,1)';
@@ -816,6 +847,9 @@ class Component extends DCLogic {
       reset: () => this.setState({ submitted: false }),
       toggleVideo: () => { const off = !this.state.videoOff; (this.vids || []).forEach(v => { if (off) v.pause(); else if (v.getBoundingClientRect().bottom > 0 && v.getBoundingClientRect().top < innerHeight) v.play().catch(() => {}); }); this.setState({ videoOff: off }); },
       videoLabel: this.state.videoOff ? 'Play background video' : 'Pause background video', videoIcon: this.state.videoOff ? '▶' : '❚❚',
+      openSizzle: (e) => this.openSizzle(e), closeSizzle: () => this.closeSizzle(),
+      sizzleBackdrop: (e) => { if (e.target === e.currentTarget) this.closeSizzle(); },
+      sizzleDisp: this.state.sizzleOpen ? 'flex' : 'none',
       legalOpen: this.state.legalOpen, legalIcon: this.state.legalOpen ? '−' : '+',
       toggleLegal: () => this.setState(s => ({ legalOpen: !s.legalOpen }))
     };

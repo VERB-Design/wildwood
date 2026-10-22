@@ -68,6 +68,16 @@ Copy source: *Copy Deck – Crestwood Investment Fund* (Google Doc 147w3OXPXgrG_
 - **Videos now autoplay even under `prefers-reduced-motion`** (Troy: "make sure all the videos autoplay"). This departs from the house default; the pause buttons (WCAG 2.2.2) are the opt-out. Off-screen videos still pause to save battery and data.
 - iOS Low Power Mode and Safari's data-saver can still block autoplay; the poster frame shows instead. Not tested on a device.
 
+### Sizzle film modal (2026-10-22)
+- Hero "Learn More" now opens a dialog playing `CRESTWOOD_SIZZLE_030_16x9_v09_1.mp4` (1080p, 19 MB, faststart, loads only on click) from the start, unmuted, with controls. Background films pause while it's open and resume on close. Esc, ×, or backdrop click closes; focus is trapped inside and returns to the button.
+- **v09_1 has no audio track** (video only) — the modal is built to play sound; drop in the mixed version at `crestwood/media/crestwood-sizzle.mp4` and it will just work.
+- "Learn More" no longer scrolls to The Fund; the nav and "Request Details" still cover navigation.
+
+### Map galleries — in-development sites (2026-10-22)
+- Sooke Point, Brew Creek and Lake Simcoe galleries filled from *MEDIA ASSETS 2 / Renderings (Crestwood Properties)*. **These are AI-generated concepts** (Brew Creek and Lake Simcoe files are named "ChatGPT Image…"; Sooke Point has the same look). Each gallery carries a visible **"Concept rendering"** tag and alt text says so. On an investor page, the client and the exempt market dealer should confirm they're comfortable showing AI concepts at all.
+- Not used: **Caledon** renderings (not a mapped site) and **Royal York** renderings — these would reveal the Downtown Toronto site, which the deck still lists as "TBC". Confirm before adding.
+- Downtown Toronto remains imageless; Canmore drone footage (4 × .mov) and the TA × Sherpa ad were not needed.
+
 ### Reproducibility
 - Renderings: `sips -s format jpeg -s formatOptions 72 -Z 1600`. Video: `avconvert --preset Preset960x540`; posters via `qlmanage -t -s 1280` (hero poster: `avconvert --start 3 --duration 1` from the source, then `qlmanage -t -s 1600`).
 - Map coordinates for the three addresses geocoded with Mapbox Geocoding v6 (Lake Simcoe match confidence "medium"); Harmony uses South Harmony Drive, Rocky View County.
