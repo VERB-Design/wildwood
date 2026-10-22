@@ -53,8 +53,15 @@ Copy source: *Copy Deck – Crestwood Investment Fund* (Google Doc 147w3OXPXgrG_
   - Destination — **supplied by Troy; this is Eibsee and the Zugspitze, Bavaria, Germany — not Canada.** Reads fine as mood, but a Canadian investor page showing a German alpine lake is a risk if anyone recognises it. Source and licence not recorded.
   - City — Toronto, ON (sunny, from the islands) — @hamednrg — unsplash.com/photos/noHMMrIbkAE — Unsplash License; tower at 41% of frame, object-position 30%.
 
-### Broken link
-- **"Discover Everwild →" points to everwild.com, which redirects to the Xbox game *Everwild*.** Needs the real spa URL (basecampresorts.com/everwildcanmore?) before launch.
+### Deck sync 2026-10-22 (newer deck copy applied)
+- Hero intro, Fund H2/body/pillars 1 & 3, Market punctuation and stat-1 note, story milestone, map target openings (Banff Q3 2027, Fernie Q4 2027, Harmony Q1 2028) — all from the deck.
+- **Canmore is operating** (deck Fund copy). Added to the map as an Operating pin (teal) at 1 Silvertip Trail, gallery from the JRNY / Canmore shoot. Card facts: the deck's "Opened: 2019" was dropped — Basecamp itself only began in 2016 and the year is unverified.
+- **Inconsistency in the deck:** Fund ¶2 says Fernie, Banff and Harmony open "in 2028"; the map legend says Banff Q3 2027 and Fernie Q4 2027; the story milestone says "late 2027 to early 2028". Flag to Nicolle.
+- Pillar 2 kept our wording (deck pillar 2 unchanged since the first pass). "US$6.8T" kept (deck still "$6.8T").
+- Story ¶2 rewritten by us to match: "Today it operates in Canmore, with Fernie, Banff, and Harmony under construction." (deck ¶2 still says "four locations").
+- **"Discover Everwild" now links to stayeverwild.com** (the real site; Basecamp's Everwild page redirects there). Resolves the everwild.com → Xbox problem.
+- Hero intro reintroduces "invested" ("invested for the long term") — Selly's earlier comment was about Basecamp *investing*; this is deck copy, client's call.
+- Team carousel is now infinite (three copies, re-centres on the middle set; clones are aria-hidden and out of the tab order).
 
 ### Reproducibility
 - Renderings: `sips -s format jpeg -s formatOptions 72 -Z 1600`. Video: `avconvert --preset Preset960x540`; posters via `qlmanage -t -s 1280` (hero poster: `avconvert --start 3 --duration 1` from the source, then `qlmanage -t -s 1600`).

@@ -37,6 +37,7 @@
   .item.on{background:var(--forest)}
   .dot{grid-row:span 2;width:12px;height:12px;border-radius:50%;box-sizing:border-box}
   .dot.done{background:var(--cream)}
+  .dot.open{background:var(--teal);box-shadow:0 0 0 2px var(--char),0 0 0 3.5px var(--teal)}
   .dot.new{border:2px solid var(--cream)}
   .name{font-family:var(--h);font-weight:600;font-size:12px;letter-spacing:.08em;text-transform:uppercase;line-height:1.25}
   .sub{font-size:13px;color:var(--beige);line-height:1.4}
@@ -48,6 +49,8 @@
   @media (prefers-reduced-motion:reduce){.mk::before{animation:none;opacity:0}}
   .pin{width:14px;height:14px;border-radius:50%;box-sizing:border-box;transition:transform .25s,box-shadow .25s}
   .pin.done{background:var(--forest);box-shadow:0 0 0 2px var(--cream)}
+  .pin.open{background:var(--teal);box-shadow:0 0 0 2px var(--forest),0 0 0 4px var(--cream)}
+  .mk.on .pin.open{box-shadow:0 0 0 2px var(--forest),0 0 0 4px var(--cream),0 0 0 11px rgba(51,84,69,.2)}
   .pin.new{background:var(--cream);border:3px solid var(--forest);box-shadow:0 0 0 1.5px var(--cream)}
   .mk.on .pin{transform:scale(1.5)}
   .mk.on .pin.done{box-shadow:0 0 0 2px var(--cream),0 0 0 9px rgba(51,84,69,.2)}
@@ -163,15 +166,19 @@
   const STYLE = 'mapbox://styles/' + (q.get('style') || 'mapbox/light-v11');
 
   const places = [
-    { done: true, slug: 'fernie', imgs: [['img/map/fernie-a.jpg', 'Rendering: Fernie spa pool'], ['img/map/fernie-b.jpg', 'Rendering: Fernie sauna'], ['img/map/fernie-c.jpg', 'Rendering: Fernie site from the north']], name: 'Fernie', prov: 'BC', sub: 'Under construction · British Columbia', ll: [-115.0616, 49.5030], z: 11, tag: 'British Columbia · Under construction',
+    { open: true, slug: 'canmore', name: 'Canmore', prov: 'AB', sub: 'Operating · Alberta', ll: [-115.3445, 51.0934], z: 12, tag: 'Alberta · Operating', url: 'https://stayeverwild.com/canmore/',
+      imgs: [['img/map/canmore-a.jpg', 'Guests walking past the sauna dome beneath the Three Sisters'], ['img/map/canmore-b.jpg', 'Everwild Canmore pools at dusk'], ['img/map/canmore-c.jpg', 'Guests in the outdoor pool']],
+      desc: 'The original Everwild, set in the Bow Valley with views of the Three Sisters. The flagship for the brand’s thermal circuit.',
+      facts: [['Type', 'Mountain Nordic Spa'], ['Status', 'Open'], ['Address', '1 Silvertip Trail, Canmore, AB'], ['Features', 'Outdoor saunas, cold plunges, rest lodges']] },
+    { done: true, slug: 'fernie', imgs: [['img/map/fernie-a.jpg', 'Rendering: Fernie spa pool'], ['img/map/fernie-b.jpg', 'Rendering: Fernie sauna'], ['img/map/fernie-c.jpg', 'Rendering: Fernie site from the north']], name: 'Fernie', prov: 'BC', sub: 'Targeted opening: Q4 2027', ll: [-115.0616, 49.5030], z: 11, tag: 'British Columbia · Under construction',
       desc: 'A mountain town in the Elk Valley, known for deep powder in winter and river valleys in summer.',
-      facts: [['Status', 'Under construction'], ['Opening', 'Late 2027 – early 2028'], ['Province', 'British Columbia']] },
-    { done: true, slug: 'banff', imgs: [['img/map/banff-a.jpg', 'Rendering: Banff pool terrace'], ['img/map/banff-b.jpg', 'Rendering: Banff covered courtyard'], ['img/map/banff-c.jpg', 'Rendering: Banff site from above']], name: 'Banff', prov: 'AB', sub: 'Under construction · Alberta', ll: [-115.5710, 51.1766], z: 11, tag: 'Alberta · Under construction',
+      facts: [['Status', 'Under construction'], ['Targeted opening', 'Q4 2027'], ['Province', 'British Columbia']] },
+    { done: true, slug: 'banff', imgs: [['img/map/banff-a.jpg', 'Rendering: Banff pool terrace'], ['img/map/banff-b.jpg', 'Rendering: Banff covered courtyard'], ['img/map/banff-c.jpg', 'Rendering: Banff site from above']], name: 'Banff', prov: 'AB', sub: 'Targeted opening: Q3 2027', ll: [-115.5710, 51.1766], z: 11, tag: 'Alberta · Under construction',
       desc: 'Set inside Canada’s first national park, in a town that draws visitors through every season.',
-      facts: [['Status', 'Under construction'], ['Opening', 'Late 2027 – early 2028'], ['Province', 'Alberta']] },
-    { done: true, slug: 'harmony', imgs: [['img/map/harmony-a.jpg', 'Rendering: Harmony outdoor pools'], ['img/map/harmony-b.jpg', 'Rendering: Harmony relaxation pool'], ['img/map/harmony-c.jpg', 'Rendering: Harmony sauna']], name: 'Harmony', prov: 'AB', sub: 'Under construction · Alberta', ll: [-114.4036, 51.1124], z: 12, tag: 'Alberta · Under construction',
+      facts: [['Status', 'Under construction'], ['Targeted opening', 'Q3 2027'], ['Province', 'Alberta']] },
+    { done: true, slug: 'harmony', imgs: [['img/map/harmony-a.jpg', 'Rendering: Harmony outdoor pools'], ['img/map/harmony-b.jpg', 'Rendering: Harmony relaxation pool'], ['img/map/harmony-c.jpg', 'Rendering: Harmony sauna']], name: 'Harmony', prov: 'AB', sub: 'Targeted opening: Q1 2028', ll: [-114.4036, 51.1124], z: 12, tag: 'Alberta · Under construction',
       desc: 'A lakeside community west of Calgary, at the edge of the foothills on the way to the Rockies.',
-      facts: [['Status', 'Under construction'], ['Opening', 'Late 2027 – early 2028'], ['Province', 'Alberta']] },
+      facts: [['Status', 'Under construction'], ['Targeted opening', 'Q1 2028'], ['Province', 'Alberta']] },
     { done: false, slug: 'sooke', name: 'Vancouver Island', prov: 'BC', sub: 'Everwild Sooke Point · In development', ll: [-123.7097, 48.3420], z: 12, tag: 'British Columbia · In development',
       desc: 'Everwild Sooke Point, on the southern tip of Vancouver Island, where the rainforest meets the Strait of Juan de Fuca.',
       facts: [['Status', 'In development'], ['Region', 'Vancouver Island'], ['Address', '1000 Sooke Point Place & 1000 Silver Spray Dr, Sooke, BC V9Z 1N8']] },
@@ -270,19 +277,20 @@
   let active = -1;
   const list = document.getElementById('list');
   const markers = [];
-  [['Under Construction', true], ['In Development', false]].forEach(([title, done]) => {
+  [['Operating', 'open'], ['Under Construction', 'done'], ['In Development', 'new']].forEach(([title, done]) => {
     const g = document.createElement('div'); g.className = 'group'; g.textContent = title; list.appendChild(g);
     places.forEach((p, i) => {
-      if (p.done !== done) return;
+      const st = p.open ? 'open' : p.done ? 'done' : 'new';
+      if (st !== done) return;
       const el = document.createElement('div');
       el.className = 'mk';
       el.style.setProperty('--d', (-i * 0.33) + 's');
-      el.innerHTML = `<span class="pin ${p.done ? 'done' : 'new'}"></span><span class="lbl">${p.name}</span>`;
+      el.innerHTML = `<span class="pin ${st}"></span><span class="lbl">${p.name}</span>`;
       el.addEventListener('click', e => { e.stopPropagation(); if (narrow() && active === i && !modal.classList.contains('show')) return showModal(places[i]); select(i, true); });
       new mapboxgl.Marker({ element: el }).setLngLat(p.ll).addTo(map);
       const b = document.createElement('button');
       b.className = 'item';
-      b.innerHTML = `<span class="dot ${p.done ? 'done' : 'new'}"></span><span class="name">${p.name}</span><span class="sub">${p.sub}</span>`;
+      b.innerHTML = `<span class="dot ${st}"></span><span class="name">${p.name}</span><span class="sub">${p.sub}</span>`;
       b.onclick = () => select(i);
       list.appendChild(b);
       markers[i] = { el, b };
