@@ -47,7 +47,7 @@ Copy source: *Copy Deck – Crestwood Investment Fund* (Google Doc 147w3OXPXgrG_
 
 ### Media requests not actioned
 - In-development map galleries — no imagery supplied.
-- **Team (2026-10-22):** seven members from the deck, now a carousel on all sizes (four across on desktop, 82% slides on mobile; dots, prev/next, keyboard-scrollable region). Headshots for Sky Mitchell, Birol Fisekci, Teresa Cook and Geoff McLean taken from **basecampresorts.com/about** (the client's own site) and cropped 4:5 — confirm Basecamp is happy to reuse them and supply originals. **Donna Fahey, Antoine Lagerec, Andrew Cockburn show monogram placeholders** — no photos on Basecamp's site; Donna has a headshot on MasterBUILT Hotels' site (her former employer), not used. Titles follow the deck; Basecamp's site lists Birol as Chief Strategy Officer (deck: President, Canada). Public sources also use "Sky McLean"; Basecamp's site and the deck use Sky Mitchell.
+- **Team (2026-10-22):** seven members from the deck, now a carousel on all sizes (four across on desktop, 82% slides on mobile; dots, prev/next, keyboard-scrollable region). Headshots for Sky Mitchell, Birol Fisekci, Teresa Cook and Geoff McLean taken from **basecampresorts.com/about** (the client's own site) and cropped 4:5 — confirm Basecamp is happy to reuse them and supply originals. **Donna Fahey's photo (2026-10-22) was supplied by Troy from a LinkedIn post** (media.licdn.com feedshare image) — a different shoot from the other four (brick and window interior vs forest), and LinkedIn post images aren't licensed for reuse; get the original from Donna/Basecamp. **Antoine Lagerec and Andrew Cockburn show monogram placeholders** — no public photos found. Titles follow the deck; Basecamp's site lists Birol as Chief Strategy Officer (deck: President, Canada). Public sources also use "Sky McLean"; Basecamp's site and the deck use Sky Mitchell.
 - **Settings — three cards (2026-10-22, Troy + Selly's deck comment):** Urban, Destination, City; eyebrow and location lines removed. Intro and card copy updated to the client's "three expressions" copy (2026-10-22). Eyebrow "The Settings" is in the client copy but stays off per Troy.
   - Urban — Vancouver (Yaletown / False Creek) — **supplied by Troy; source and licence not recorded.** Confirm before launch.
   - Destination — **supplied by Troy; this is Eibsee and the Zugspitze, Bavaria, Germany — not Canada.** Reads fine as mood, but a Canadian investor page showing a German alpine lake is a risk if anyone recognises it. Source and licence not recorded.
@@ -62,6 +62,11 @@ Copy source: *Copy Deck – Crestwood Investment Fund* (Google Doc 147w3OXPXgrG_
 - **"Discover Everwild" now links to stayeverwild.com** (the real site; Basecamp's Everwild page redirects there). Resolves the everwild.com → Xbox problem.
 - Hero intro reintroduces "invested" ("invested for the long term") — Selly's earlier comment was about Basecamp *investing*; this is deck copy, client's call.
 - Team carousel is now infinite (three copies, re-centres on the middle set; clones are aria-hidden and out of the tab order).
+
+### Video playback (2026-10-22)
+- The dc runtime strips `muted`, `loop` and `autoplay` from `<video>` markup, so the films played once and stopped. They're now set in `componentDidMount` (plus an `ended` fallback). Port this to the production build — in React, set `muted` via a ref, not JSX.
+- **Videos now autoplay even under `prefers-reduced-motion`** (Troy: "make sure all the videos autoplay"). This departs from the house default; the pause buttons (WCAG 2.2.2) are the opt-out. Off-screen videos still pause to save battery and data.
+- iOS Low Power Mode and Safari's data-saver can still block autoplay; the poster frame shows instead. Not tested on a device.
 
 ### Reproducibility
 - Renderings: `sips -s format jpeg -s formatOptions 72 -Z 1600`. Video: `avconvert --preset Preset960x540`; posters via `qlmanage -t -s 1280` (hero poster: `avconvert --start 3 --duration 1` from the source, then `qlmanage -t -s 1600`).

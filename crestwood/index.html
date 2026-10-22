@@ -428,7 +428,7 @@ image-slot::part(frame){background:#C4B9A6}
         </div>
         <p style="margin:0;font-size:16px;line-height:1.6;max-width:520px">Crestwood is managed by Basecamp Group, the Canadian team that develops and operates Everwild, with more than C$750M of hospitality and real estate delivered since 2009.</p>
       </div>
-      <div data-cascade="team" ref="{{ teamRef }}" onScroll="{{ teamScroll }}" role="region" aria-label="Leadership team" tabindex="0" style="display:flex;align-items:flex-start;gap:{{ tq.gap }};overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:{{ tq.inset }};scrollbar-width:none;margin:{{ tq.margin }};padding:{{ tq.pad }};outline-offset:4px">
+      <div data-cascade="team" ref="{{ teamRef }}" onScroll="{{ teamScroll }}" role="region" aria-label="Leadership team" tabindex="0" style="display:flex;align-items:flex-start;gap:{{ tq.gap }};overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-left:{{ tq.inset }};scrollbar-width:none;margin:{{ tq.margin }};padding:{{ tq.pad }};outline-offset:4px">
         <sc-for list="{{ teamLoop }}" as="m" hint-placeholder-count="7">
           <button onClick="{{ m.toggle }}" aria-expanded="{{ m.expanded }}" aria-hidden="{{ m.clone }}" tabindex="{{ m.tab }}" style="all:unset;cursor:pointer;display:flex;flex-direction:column;gap:18px;flex:{{ tq.slide }};scroll-snap-align:start;box-sizing:border-box">
             <div style="position:relative;aspect-ratio:4/5;overflow:hidden;background:#C4B9A6">
@@ -572,9 +572,12 @@ class Component extends DCLogic {
     // Background videos: React drops the muted attribute, so set it here. Play only while in view,
     // never under reduced motion; the pause buttons (WCAG 2.2.2) stop all of them together.
     this.vids = [...document.querySelectorAll('video[data-bg-video]')];
-    this.vids.forEach(v => { v.muted = true; });
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { this.vids.forEach(v => v.pause()); this.setState({ videoOff: true }); }
-    else if ('IntersectionObserver' in window) {
+    // The runtime drops muted/loop/autoplay from the markup, so set them here — without loop each film stops after one pass.
+    // Autoplay for everyone (Troy, 2026-10-22); the pause buttons are the opt-out.
+    this.vids.forEach(v => { v.muted = v.defaultMuted = true; v.loop = true; v.autoplay = true; v.playsInline = true;
+      ['muted', 'loop', 'autoplay', 'playsinline'].forEach(a => v.setAttribute(a, ''));
+      v.addEventListener('ended', () => { if (!this.state.videoOff) { v.currentTime = 0; v.play().catch(() => {}); } }); });
+    if ('IntersectionObserver' in window) {
       this.vio = new IntersectionObserver(es => es.forEach(en => en.isIntersecting && !this.state.videoOff ? en.target.play().catch(() => {}) : en.target.pause()), { threshold: 0.1 });
       this.vids.forEach(v => this.vio.observe(v));
     } else this.vids.forEach(v => v.play().catch(() => {}));
@@ -727,7 +730,7 @@ class Component extends DCLogic {
       { name: 'Birol Fisekci', role: 'President, Canada', photo: 'img/team/birol.jpg', pos: '50% 20%', bio: 'Birol brings more than 30 years of real estate experience and the ability to move complex developments forward. He connects strategy, land, and execution, grounding BCG’s growth in a practical understanding of what each opportunity requires.' },
       { name: 'Teresa Cook', role: 'Chief Financial Officer', photo: 'img/team/teresa.jpg', pos: '50% 20%', bio: 'Teresa has helped build Basecamp’s financial foundation since 2017. A CPA, CGA who knows the business from development through daily operations, she brings continuity and discipline to the decisions behind its growth.' },
       { name: 'Geoff McLean', role: 'Chief Commercial Officer & Co-Founder', photo: 'img/team/geoff.jpg', pos: '70% 20%', bio: 'Geoff builds brands people want to be part of and places they return to. A co-founder with deep expertise in storytelling and digital marketing, he connects brand, community, and commercial strategy to build demand across BCG’s portfolio.' },
-      { name: 'Donna Fahey', role: 'Chief Hospitality Officer', bio: 'Donna puts the quality of every stay at the centre of hotel performance. Drawing on her leadership at MasterBUILT Hotels, she aligns people, service, and revenue so the guest promise holds up in day-to-day practice.' },
+      { name: 'Donna Fahey', role: 'Chief Hospitality Officer', photo: 'img/team/donna.jpg', pos: '50% 25%', bio: 'Donna puts the quality of every stay at the centre of hotel performance. Drawing on her leadership at MasterBUILT Hotels, she aligns people, service, and revenue so the guest promise holds up in day-to-day practice.' },
       { name: 'Antoine Lagerec', role: 'VP, Special Projects', bio: 'Antoine draws on his experience leading thermal spa design to create restorative places that feel part of the landscape. His approach to materials, textures, and layout gives guests a distinctive experience that encourages repeat visits and supports commercial performance.' },
       { name: 'Andrew Cockburn', role: 'VP, Business Development', bio: 'Andrew leads BCG’s business development team in building the investor relationships and partnerships that support the company’s expansion. With more than 20 years in senior leadership, he has raised over US$100M in equity and debt and overseen acquisitions across North America.' }
     ];
