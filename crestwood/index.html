@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600&amp;family=Figtree:wght@400;500;600&amp;display=swap" rel="stylesheet">
 <style>
-html{scroll-behavior:smooth;font-size:16px;scroll-padding-top:74px}
+html{scroll-behavior:smooth;font-size:16px;scroll-padding-top:var(--nav-h,74px)}
 body{margin:0;background:#FAF6EE;color:#241F21;font-family:'proxima-nova','Proxima Nova','Figtree','Helvetica Neue',Arial,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 a:hover{color:#335445}
@@ -24,7 +24,7 @@ image-slot::part(frame){background:#C4B9A6}
 <script src="./image-slot.js"></script>
 </helmet>
 
-<header style="position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px clamp(20px,4vw,56px);background:#241F21;color:#FAF6EE;border-bottom:1px solid rgba(250,246,238,0.12)">
+<header style="position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:16px clamp(20px,4vw,56px);background:#241F21;color:#FAF6EE;border-bottom:1px solid rgba(250,246,238,0.12)">
   <a href="#top" aria-label="Basecamp Group" style="display:flex;align-items:center">
     <img src="assets/bcg-logo-white.svg" alt="Basecamp Group" style="display:block;width:clamp(120px,11vw,170px);height:auto">
   </a>
@@ -64,6 +64,7 @@ image-slot::part(frame){background:#C4B9A6}
     </sc-if>
   </sc-if>
 </header>
+<div aria-hidden="true" style="height:var(--nav-h,74px)"></div>
 
 <section id="top" style="position:relative;min-height:calc(100vh - 74px);display:flex;flex-direction:column;justify-content:flex-end;gap:48px;padding:clamp(48px,6vw,96px) 0;box-sizing:border-box;background:#000000;color:#FAF6EE;overflow:hidden">
   <video data-bg-video muted loop playsinline preload="auto" poster="media/element-hero-poster.jpg?v=2" aria-hidden="true" tabindex="-1" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><source src="media/element-hero.mp4" type="video/mp4"></video>
@@ -562,6 +563,9 @@ class Component extends DCLogic {
     this.mql = matchMedia('(max-width: 760px)');
     this.onMq = () => this.setState({ mob: this.mql.matches, menuOpen: false });
     this.onMq(); this.mql.addEventListener('change', this.onMq);
+    // Header is position:fixed (the runtime wraps it with the hero, which capped position:sticky); keep the spacer and anchor offset in sync with its height
+    const hd = document.querySelector('header');
+    if (hd) { const setH = () => document.documentElement.style.setProperty('--nav-h', hd.offsetHeight + 'px'); setH(); if ('ResizeObserver' in window) { this.hro = new ResizeObserver(setH); this.hro.observe(hd); } }
     this.revealT = setTimeout(() => this.setupReveals(), 60);
     this.onTeamResize = () => this.measureTeam(); addEventListener('resize', this.onTeamResize); setTimeout(() => this.measureTeam(), 120);
     const bEl = this.brandRef.current;
@@ -630,7 +634,7 @@ class Component extends DCLogic {
     this.teamT = setTimeout(() => { const b = this.teamAbs(); if (b < 7 || b >= 14) this.teamJump(7 + (((b % 7) + 7) % 7)); }, 160);
   }
   measureTeam() { this.teamJump(7 + (this.state.teamI || 0)); }
-  componentWillUnmount() { removeEventListener("resize", this.onTeamResize); clearTimeout(this.teamT); this.mql && this.mql.removeEventListener('change', this.onMq); cancelAnimationFrame(this.raf); this.io && this.io.disconnect(); this.bio && this.bio.disconnect(); this.rio && this.rio.disconnect(); this.vio && this.vio.disconnect(); clearTimeout(this.revealT); }
+  componentWillUnmount() { this.hro && this.hro.disconnect(); removeEventListener("resize", this.onTeamResize); clearTimeout(this.teamT); this.mql && this.mql.removeEventListener('change', this.onMq); cancelAnimationFrame(this.raf); this.io && this.io.disconnect(); this.bio && this.bio.disconnect(); this.rio && this.rio.disconnect(); this.vio && this.vio.disconnect(); clearTimeout(this.revealT); }
   setupReveals() {
     if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const ease = 'cubic-bezier(.2,.7,.2,1)';
