@@ -186,15 +186,14 @@ image-slot::part(frame){background:#C4B9A6}
   <div style="max-width:1320px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(48px,6vw,80px)">
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:40px;align-items:end">
       <div style="display:flex;flex-direction:column;gap:20px">
-        <span style="font-family:'commuters-sans','Commuters Sans','Jost','Century Gothic','Avenir Next',Arial,sans-serif;font-weight:600;font-size:13.5px;letter-spacing:0.2em;line-height:1.4;text-transform:uppercase;color:#A9C6BA">The Settings</span>
-        <h2 style="margin:0;font-family:'commuters-sans','Commuters Sans','Jost','Century Gothic','Avenir Next',Arial,sans-serif;font-weight:600;font-size:clamp(26px,3vw,37px);line-height:1.15;letter-spacing:0.1em;text-transform:uppercase">Where Everwild goes next</h2>
+        <h2 style="margin:0;font-family:'commuters-sans','Commuters Sans','Jost','Century Gothic','Avenir Next',Arial,sans-serif;font-weight:600;font-size:clamp(26px,3vw,37px);line-height:1.15;letter-spacing:0.1em;text-transform:uppercase">Where Everwild Goes Next</h2>
       </div>
-      <p style="margin:0;font-size:16px;line-height:1.6;max-width:520px">Each Everwild property is shaped by the land around it. The Crestwood Investment Fund will grow the brand across five settings, from city centres to the open prairie.</p>
+      <p style="margin:0;font-size:16px;line-height:1.6;max-width:520px">Each Everwild property is shaped by the land around it. The Crestwood Investment Fund will grow the brand across three settings, from destinations on their own ground to the heart of the city.</p>
     </div>
     <sc-if value="{{ layoutPanels }}" hint-placeholder-val="{{ true }}">
       <div style="overflow-x:auto;width:100vw;margin-left:calc(50% - 50vw)">
         <div style="display:flex;gap:0;min-width:760px;height:calc(100vh - 74px);min-height:520px">
-          <sc-for list="{{ panels }}" as="p" hint-placeholder-count="5">
+          <sc-for list="{{ panels }}" as="p" hint-placeholder-count="3">
             <button onClick="{{ p.select }}" style="all:unset;cursor:pointer;box-sizing:border-box;flex:{{ p.grow }};min-width:0;overflow:hidden;background:{{ p.bg }};color:{{ p.fg }};padding:clamp(24px,3.4vw,56px);display:flex;flex-direction:column;justify-content:space-between;gap:24px;transition:flex .55s cubic-bezier(.2,.7,.2,1);position:relative;text-shadow:0 1px 14px rgba(0,0,0,0.45)">
               <img src="{{ p.img }}" alt="" aria-hidden="true" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ p.pos }};pointer-events:none">
               <span style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,rgba(0,0,0,0) 100%)"></span>
@@ -205,7 +204,6 @@ image-slot::part(frame){background:#C4B9A6}
               </sc-if>
               <sc-if value="{{ p.on }}" hint-placeholder-val="{{ false }}">
                 <div style="position:relative;display:flex;flex-direction:column;gap:16px;min-width:300px;max-width:520px">
-                  <span style="font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase">{{ p.where }}</span>
                   <span style="font-family:'commuters-sans','Commuters Sans','Jost','Century Gothic','Avenir Next',Arial,sans-serif;font-size:clamp(32px,4vw,56px);font-weight:600;letter-spacing:0.06em;line-height:1.05;text-transform:uppercase">{{ p.name }}</span>
                   <p style="margin:0;font-size:16px;line-height:1.6">{{ p.desc }}</p>
                 </div>
@@ -217,13 +215,10 @@ image-slot::part(frame){background:#C4B9A6}
     </sc-if>
     <sc-if value="{{ layoutPanelsMob }}" hint-placeholder-val="{{ false }}">
       <div style="width:100vw;margin-left:calc(50% - 50vw);display:flex;flex-direction:column">
-        <sc-for list="{{ mpanels }}" as="p" hint-placeholder-count="5">
+        <sc-for list="{{ mpanels }}" as="p" hint-placeholder-count="3">
           <button onClick="{{ p.select }}" style="all:unset;cursor:pointer;box-sizing:border-box;height:{{ p.h }};overflow:hidden;background:{{ p.bg }};color:{{ p.fg }};padding:0 20px;display:flex;flex-direction:column;justify-content:{{ p.justify }};gap:12px;transition:height .55s cubic-bezier(.2,.7,.2,1);position:relative;text-shadow:0 1px 14px rgba(0,0,0,0.45)">
             <img src="{{ p.img }}" alt="" aria-hidden="true" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ p.pos }};pointer-events:none">
             <span style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(0,0,0,0.5) 0%,rgba(0,0,0,0) 100%)"></span>
-            <sc-if value="{{ p.on }}" hint-placeholder-val="{{ false }}">
-              <span style="position:relative;font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase">{{ p.where }}</span>
-            </sc-if>
             <div style="position:relative;display:flex;justify-content:space-between;align-items:center;gap:12px">
               <span style="font-family:'commuters-sans','Commuters Sans','Jost','Century Gothic','Avenir Next',Arial,sans-serif;font-size:{{ p.size }};font-weight:600;letter-spacing:0.08em;line-height:1.05;text-transform:uppercase;transition:font-size .4s">{{ p.name }}</span>
               <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" style="display:block;flex:none"><path d="M1.5 7.5h12"></path><path d="M7.5 1.5v12" style="opacity:{{ p.vOp }};transition:opacity .25s"></path></svg>
@@ -433,11 +428,12 @@ image-slot::part(frame){background:#C4B9A6}
         </div>
         <p style="margin:0;font-size:16px;line-height:1.6;max-width:520px">Crestwood is managed by Basecamp Group, the Canadian team that develops and operates Everwild, with more than C$750M of hospitality and real estate delivered since 2009.</p>
       </div>
-      <div data-cascade="team" ref="{{ teamRef }}" onScroll="{{ teamScroll }}" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:20px;display:{{ mq.carDisplay }};overflow-x:{{ mq.carOverflow }};scroll-snap-type:{{ mq.snap }};scroll-padding-left:20px;scrollbar-width:none;margin:{{ mq.carMargin }};padding:{{ mq.carPad }}">
-        <sc-for list="{{ team }}" as="m" hint-placeholder-count="4">
-          <button onClick="{{ m.toggle }}" style="all:unset;cursor:pointer;display:flex;flex-direction:column;gap:18px;flex:{{ mq.slide }};scroll-snap-align:start;box-sizing:border-box">
+      <div data-cascade="team" ref="{{ teamRef }}" onScroll="{{ teamScroll }}" role="region" aria-label="Leadership team" tabindex="0" style="display:flex;align-items:flex-start;gap:{{ tq.gap }};overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:{{ tq.inset }};scrollbar-width:none;margin:{{ tq.margin }};padding:{{ tq.pad }};outline-offset:4px">
+        <sc-for list="{{ team }}" as="m" hint-placeholder-count="7">
+          <button onClick="{{ m.toggle }}" aria-expanded="{{ m.expanded }}" style="all:unset;cursor:pointer;display:flex;flex-direction:column;gap:18px;flex:{{ tq.slide }};scroll-snap-align:start;box-sizing:border-box">
             <div style="position:relative;aspect-ratio:4/5;overflow:hidden;background:#C4B9A6">
-              <image-slot id="{{ m.slot }}" shape="rect" placeholder=""></image-slot>
+              <sc-if value="{{ m.hasPhoto }}" hint-placeholder-val="{{ true }}"><img src="{{ m.photo }}" alt="Portrait of {{ m.name }}" loading="lazy" decoding="async" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:{{ m.pos }}"></sc-if>
+              <sc-if value="{{ m.noPhoto }}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#335445;color:#A9C6BA;font-family:'commuters-sans','Commuters Sans','Jost','Century Gothic','Avenir Next',Arial,sans-serif;font-weight:600;font-size:clamp(36px,4vw,56px);letter-spacing:0.1em">{{ m.initials }}</span></sc-if>
             </div>
             <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
               <div style="display:flex;flex-direction:column;gap:6px">
@@ -452,7 +448,7 @@ image-slot::part(frame){background:#C4B9A6}
           </button>
         </sc-for>
       </div>
-      <sc-if value="{{ mob }}" hint-placeholder-val="{{ false }}">
+      <div>
         <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:-16px">
           <div style="display:flex;gap:8px">
             <sc-for list="{{ teamDots }}" as="d" hint-placeholder-count="4">
@@ -460,11 +456,11 @@ image-slot::part(frame){background:#C4B9A6}
             </sc-for>
           </div>
           <div style="display:flex;gap:10px">
-            <button onClick="{{ teamPrev }}" aria-label="Previous" style="all:unset;cursor:pointer;width:44px;height:44px;border-radius:50%;border:1px solid #241F21;display:flex;align-items:center;justify-content:center;opacity:{{ teamPrevOp }};transition:opacity .2s"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#241F21" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2L4 7l5 5"></path></svg></button>
-            <button onClick="{{ teamNext }}" aria-label="Next" style="all:unset;cursor:pointer;width:44px;height:44px;border-radius:50%;border:1px solid #241F21;display:flex;align-items:center;justify-content:center;opacity:{{ teamNextOp }};transition:opacity .2s"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#241F21" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l5 5-5 5"></path></svg></button>
+            <button onClick="{{ teamPrev }}" aria-label="Previous team member" style="all:unset;cursor:pointer;width:44px;height:44px;border-radius:50%;border:1px solid #241F21;display:flex;align-items:center;justify-content:center;opacity:{{ teamPrevOp }};transition:opacity .2s"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#241F21" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2L4 7l5 5"></path></svg></button>
+            <button onClick="{{ teamNext }}" aria-label="Next team member" style="all:unset;cursor:pointer;width:44px;height:44px;border-radius:50%;border:1px solid #241F21;display:flex;align-items:center;justify-content:center;opacity:{{ teamNextOp }};transition:opacity .2s"><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#241F21" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2l5 5-5 5"></path></svg></button>
           </div>
         </div>
-      </sc-if>
+      </div>
       </div>
   </div>
 </section>
@@ -567,6 +563,7 @@ class Component extends DCLogic {
     this.onMq = () => this.setState({ mob: this.mql.matches, menuOpen: false });
     this.onMq(); this.mql.addEventListener('change', this.onMq);
     this.revealT = setTimeout(() => this.setupReveals(), 60);
+    this.onTeamResize = () => this.measureTeam(); addEventListener('resize', this.onTeamResize); setTimeout(() => this.measureTeam(), 300);
     const bEl = this.brandRef.current;
     if (bEl && 'IntersectionObserver' in window) {
       this.bio = new IntersectionObserver((es) => es.forEach(en => this.setState({ brandIn: en.isIntersecting })), { threshold: 0.35 });
@@ -610,7 +607,12 @@ class Component extends DCLogic {
       this.setState({ sending: false, submitted: true });
     } catch (err) { console.error(err); this.setState({ sending: false, sendError: true }); }
   }
-  componentWillUnmount() { this.mql && this.mql.removeEventListener('change', this.onMq); cancelAnimationFrame(this.raf); this.io && this.io.disconnect(); this.bio && this.bio.disconnect(); this.rio && this.rio.disconnect(); this.vio && this.vio.disconnect(); clearTimeout(this.revealT); }
+  measureTeam() {
+    const el = this.teamRef.current; if (!el) return;
+    const w = this.slideW(el), max = Math.max(0, Math.round((el.scrollWidth - el.clientWidth) / w));
+    if (max !== this.state.teamMax) this.setState({ teamMax: max });
+  }
+  componentWillUnmount() { removeEventListener('resize', this.onTeamResize); this.mql && this.mql.removeEventListener('change', this.onMq); cancelAnimationFrame(this.raf); this.io && this.io.disconnect(); this.bio && this.bio.disconnect(); this.rio && this.rio.disconnect(); this.vio && this.vio.disconnect(); clearTimeout(this.revealT); }
   setupReveals() {
     if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const ease = 'cubic-bezier(.2,.7,.2,1)';
@@ -660,7 +662,7 @@ class Component extends DCLogic {
 
   renderVals() {
     const v = this.baseVals(), mob = this.state.mob;
-    const dots = (key, ref) => [0, 1, 2, 3].map(i => ({ label: 'Slide ' + (i + 1), bg: i === this.state[key] ? '#241F21' : 'transparent', go: () => this.goSlide(ref, i) }));
+    const dots = (key, ref, n = 4) => Array.from({ length: n }, (_, i) => i).map(i => ({ label: 'Slide ' + (i + 1), bg: i === this.state[key] ? '#241F21' : 'transparent', go: () => this.goSlide(ref, i) }));
     const mp = this.state.mPanel;
     return { ...v, mob, desk: !mob, menuOpen: this.state.menuOpen,
       toggleMenu: () => this.setState(s => ({ menuOpen: !s.menuOpen })),
@@ -669,12 +671,13 @@ class Component extends DCLogic {
       layoutPanels: v.layoutPanels && !mob, layoutPanelsMob: v.layoutPanels && mob,
       mpanels: v.panels.map((p, i) => { const on = i === mp; return { ...p, on, h: mp == null ? '18vh' : (on ? '50vh' : '10vh'), justify: on ? 'flex-end' : 'center', size: on ? '32px' : '20px', vOp: on ? 0 : 1, select: () => this.setState(s => ({ mPanel: s.mPanel === i ? null : i })) }; }),
       storyRef: this.storyRef, teamRef: this.teamRef,
-      storyScroll: () => this.onSlide(this.storyRef, 'storyI'), teamScroll: () => this.onSlide(this.teamRef, 'teamI'),
-      storyDots: dots('storyI', this.storyRef), teamDots: dots('teamI', this.teamRef),
+      storyScroll: () => this.onSlide(this.storyRef, 'storyI'), teamScroll: () => { this.onSlide(this.teamRef, 'teamI'); this.measureTeam(); },
+      storyDots: dots('storyI', this.storyRef), teamDots: dots('teamI', this.teamRef, (this.state.teamMax ?? 3) + 1),
       storyPrev: () => this.goSlide(this.storyRef, this.state.storyI - 1), storyNext: () => this.goSlide(this.storyRef, Math.min(3, this.state.storyI + 1)),
-      teamPrev: () => this.goSlide(this.teamRef, this.state.teamI - 1), teamNext: () => this.goSlide(this.teamRef, Math.min(3, this.state.teamI + 1)),
+      teamPrev: () => this.goSlide(this.teamRef, this.state.teamI - 1), teamNext: () => this.goSlide(this.teamRef, Math.min(this.state.teamMax ?? 3, this.state.teamI + 1)),
       storyPrevOp: this.state.storyI > 0 ? 1 : 0.3, storyNextOp: this.state.storyI < 3 ? 1 : 0.3,
-      teamPrevOp: this.state.teamI > 0 ? 1 : 0.3, teamNextOp: this.state.teamI < 3 ? 1 : 0.3,
+      teamPrevOp: this.state.teamI > 0 ? 1 : 0.3, teamNextOp: this.state.teamI < (this.state.teamMax ?? 3) ? 1 : 0.3,
+      tq: mob ? { gap: '16px', inset: '20px', margin: '0 -20px', pad: '12px 20px 4px', slide: '0 0 82%' } : { gap: '20px', inset: '0px', margin: '0', pad: '0 0 4px', slide: '0 0 clamp(240px, calc((100% - 60px) / 4), 400px)' },
       mq: mob ? { statGap: '24px', statMin: 'auto', carDisplay: 'flex', carGap: '16px', carOverflow: 'auto', snap: 'x mandatory', carMargin: '0 -20px', carPad: '12px 20px 4px', slide: '0 0 82%', sticky: 'static', fieldPad: '10px 16px', formGap: '19px', gridGap: '11px', labelGap: '3px', chipGap: '7px', footGap: '16px 24px', cardPad: '16px', cardMargin: '0 -12px' }
         : { statGap: '40px', statMin: '240px', carDisplay: 'grid', carGap: 'normal', carOverflow: 'visible', snap: 'none', carMargin: '0', carPad: '0', slide: 'initial', sticky: 'sticky', fieldPad: '14px 16px', formGap: '22px', gridGap: '14px', labelGap: '6px', chipGap: '10px', footGap: '24px', cardPad: 'clamp(28px,3.4vw,44px)', cardMargin: '0' }
     };
@@ -703,11 +706,15 @@ class Component extends DCLogic {
     const si = this.state.stop ?? 1;
     const open = this.state.open ?? 'BC-0';
     const list = M[prov], mi = Math.min(this.state.market ?? 0, list.length - 1);
+    // Team: copy deck 2026-10-22. Photos: basecampresorts.com/about (client's own); others pending from Basecamp.
     const T = [
-      { name: 'Margaret Holloway', role: 'Managing Partner', bio: 'Margaret founded Basecamp Group in 2009 after 15 years in commercial real estate finance in Calgary and Toronto. She has led more than C$750M of development across Alberta and British Columbia.' },
-      { name: 'David Okafor', role: 'Chief Investment Officer', bio: 'David oversees underwriting and capital strategy. Before Basecamp Group, he spent a decade at a Canadian pension fund managing a Western Canadian real estate portfolio.' },
-      { name: 'Claire Fontaine', role: 'Head of Development', bio: 'Claire has delivered hospitality projects across Canada for over twenty years, from entitlement through construction and lease-up.' },
-      { name: 'Ryan MacLeod', role: 'Director, Investor Relations', bio: 'Ryan works directly with Crestwood’s investor community, helping Canadians understand the offering and invest through registered accounts including RRSPs and TFSAs, available from January 15, 2027.' }
+      { name: 'Sky Mitchell', role: 'CEO & Founder', photo: 'img/team/sky.jpg', pos: '30% 20%', bio: 'Sky founded Basecamp and grew it into a hospitality investment platform with $920M+ in assets under management. Her development and operating experience anchors BCG’s integrated approach to wellness hospitality.' },
+      { name: 'Birol Fisekci', role: 'President, Canada', photo: 'img/team/birol.jpg', pos: '50% 20%', bio: 'Birol brings more than 30 years of real estate experience and the ability to move complex developments forward. He connects strategy, land, and execution, grounding BCG’s growth in a practical understanding of what each opportunity requires.' },
+      { name: 'Teresa Cook', role: 'Chief Financial Officer', photo: 'img/team/teresa.jpg', pos: '50% 20%', bio: 'Teresa has helped build Basecamp’s financial foundation since 2017. A CPA, CGA who knows the business from development through daily operations, she brings continuity and discipline to the decisions behind its growth.' },
+      { name: 'Geoff McLean', role: 'Chief Commercial Officer & Co-Founder', photo: 'img/team/geoff.jpg', pos: '70% 20%', bio: 'Geoff builds brands people want to be part of and places they return to. A co-founder with deep expertise in storytelling and digital marketing, he connects brand, community, and commercial strategy to build demand across BCG’s portfolio.' },
+      { name: 'Donna Fahey', role: 'Chief Hospitality Officer', bio: 'Donna puts the quality of every stay at the centre of hotel performance. Drawing on her leadership at MasterBUILT Hotels, she aligns people, service, and revenue so the guest promise holds up in day-to-day practice.' },
+      { name: 'Antoine Lagerec', role: 'VP, Special Projects', bio: 'Antoine draws on his experience leading thermal spa design to create restorative places that feel part of the landscape. His approach to materials, textures, and layout gives guests a distinctive experience that encourages repeat visits and supports commercial performance.' },
+      { name: 'Andrew Cockburn', role: 'VP, Business Development', bio: 'Andrew leads BCG’s business development team in building the investor relationships and partnerships that support the company’s expansion. With more than 20 years in senior leadership, he has raised over US$100M in equity and debt and overseen acquisitions across North America.' }
     ];
     return {
       mapboxToken: encodeURIComponent(this.props.mapboxToken || 'pk.eyJ1IjoidmVyYi1tYXBib3giLCJhIjoiY2x3b3lwYWRxMHB3czJqcXF6M2JuaGluMSJ9.STvoAKDCZpyo3sykoCPPpw'),
@@ -752,16 +759,14 @@ class Component extends DCLogic {
       layoutPanels: (this.props.marketsLayout ?? 'panels') === 'panels',
       layoutIndex: this.props.marketsLayout === 'index',
       panels: [
-        { name: 'Urban', where: 'Toronto · Calgary · Vancouver', desc: 'City-centre spas built for regular visits. Rooftop and courtyard thermal circuits, treatments, and memberships, a short trip from home or the office.' },
-        { name: 'Coastal', where: 'Pacific Coast · Vancouver Island', desc: 'Ocean air, rainforests, and long views over the water. Saunas and cold plunges set along the shoreline, open through every season.' },
-        { name: 'Mountain', where: 'Whistler · Canmore · Rockies', desc: 'Resort towns with year-round visitors. Outdoor pools and saunas beneath the peaks, busy through both the ski season and summer.' },
-        { name: 'Forest', where: 'Lake Simcoe · Ontario', desc: 'Weekend retreats among lakes and trees, within reach of major cities. Cabins, trails, and quiet rest areas for overnight stays.' },
-        { name: 'Prairie', where: 'Edmonton · Saskatoon · Winnipeg', desc: 'Wide skies and cozy winters. Heated pools and saunas designed for prairie cold, rooted in the river valleys of Western Canada.' }
+        { name: 'Urban', desc: 'City-centre spas built for regular visits. Rooftop and courtyard thermal circuits, treatments, and memberships, a short trip from home or the office.' },
+        { name: 'Destination', desc: 'Everwild on its own ground, beside a natural landscape. Immersive wellness, programming, dining, and a hotel, shaped by its place.' },
+        { name: 'City', desc: 'Resort towns with year-round visitors. Outdoor pools and saunas beneath the peaks, busy through both the ski season and summer.' }
       ].map((m, i) => {
         const on = i === (this.state.panel ?? 0);
-        // Settings imagery: Unsplash License (credits in docs/PRODUCTION-NOTES.md)
-        const img = ['urban', 'coastal', 'mountain', 'forest', 'prairie'].map(n => 'img/settings/' + n + '.jpg')[i];
-        const pos = ['30% 50%', '50% 50%', '50% 45%', '50% 55%', '50% 50%'][i];
+        // Settings imagery: Urban + Destination supplied by Troy (2026-10-22); City = Unsplash (credits in docs/PRODUCTION-NOTES.md)
+        const img = ['urban', 'destination', 'city'].map(n => 'img/settings/' + n + '.jpg')[i];
+        const pos = ['55% 50%', '50% 55%', '30% 50%'][i];
         return { ...m, on, off: !on, img, pos, grow: on ? '5 1 0%' : '1 1 0%', bg: '#241F21', fg: '#FAF6EE', select: () => this.setState({ panel: i }) }; }),
       layoutSplit: this.props.marketsLayout === 'split',
       layoutRoute: this.props.marketsLayout === 'route',
@@ -781,7 +786,7 @@ class Component extends DCLogic {
       stop: R[si],
       team: T.map((m, i) => {
         const on = this.state.member === i;
-        return { ...m, n: '0' + (i + 1), slot: 'cw-team-' + i,
+        return { ...m, n: '0' + (i + 1), hasPhoto: !!m.photo, noPhoto: !m.photo, initials: m.name.split(' ').map(w => w[0]).join(''), expanded: on ? 'true' : 'false',
           toggle: () => this.setState(s => ({ member: s.member === i ? null : i })),
           rows: on ? '1fr' : '0fr', icon: on ? '−' : '+', vOp: on ? 0 : 1, btnBg: on ? '#241F21' : 'transparent', btnColor: on ? '#FAF6EE' : '#241F21' };
       }),

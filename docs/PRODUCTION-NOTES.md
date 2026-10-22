@@ -46,14 +46,16 @@ Copy source: *Copy Deck – Crestwood Investment Fund* (Google Doc 147w3OXPXgrG_
 - Form error message uses `role="alert"`; colour #8A3B2E on cream not contrast-checked.
 
 ### Media requests not actioned
-- In-development map galleries and team portraits — no imagery supplied.
-- **Settings imagery — Unsplash License** (free commercial use, no attribution required; credit is courteous). Replaced the Everwild renderings/photos 2026-10-20 at Troy's request:
-  - Urban — Toronto, ON (sunny, from the islands) — @hamednrg — unsplash.com/photos/noHMMrIbkAE — 2600 px; tower at 41% of frame, object-position 30% centres it in the open card
-  - Coastal — Juan de Fuca, BC — @mattdren — unsplash.com/photos/rRwWXI_PeGg
-  - Mountain — Banff, AB — @nunzg — unsplash.com/photos/BP0on2uI8bM
-  - Forest — Algonquin Park, ON — @arianka — unsplash.com/photos/lJUPztX1SjI — 2300 px, 768 KB (busy texture; heaviest settings image)
-  - Prairie — Canada (location unconfirmed) — @sanateddy — unsplash.com/photos/tO0HubKpo70
-  Unsplash License bars selling the photos unaltered or using them to build a competing service; fine for this use. Stock, not Everwild properties — no captions imply otherwise.
+- In-development map galleries — no imagery supplied.
+- **Team (2026-10-22):** seven members from the deck, now a carousel on all sizes (four across on desktop, 82% slides on mobile; dots, prev/next, keyboard-scrollable region). Headshots for Sky Mitchell, Birol Fisekci, Teresa Cook and Geoff McLean taken from **basecampresorts.com/about** (the client's own site) and cropped 4:5 — confirm Basecamp is happy to reuse them and supply originals. **Donna Fahey, Antoine Lagerec, Andrew Cockburn show monogram placeholders** — no photos on Basecamp's site; Donna has a headshot on MasterBUILT Hotels' site (her former employer), not used. Titles follow the deck; Basecamp's site lists Birol as Chief Strategy Officer (deck: President, Canada). Public sources also use "Sky McLean"; Basecamp's site and the deck use Sky Mitchell.
+- **Settings — three cards (2026-10-22, Troy + Selly's deck comment):** Urban, Destination, City; eyebrow and location lines removed. Intro line rewritten by us for three settings ("from destinations on their own ground to the heart of the city") — the deck still says "five settings… open prairie".
+  - Urban — Vancouver (Yaletown / False Creek) — **supplied by Troy; source and licence not recorded.** Confirm before launch.
+  - Destination — **supplied by Troy; this is Eibsee and the Zugspitze, Bavaria, Germany — not Canada.** Reads fine as mood, but a Canadian investor page showing a German alpine lake is a risk if anyone recognises it. Source and licence not recorded.
+  - City — Toronto, ON (sunny, from the islands) — @hamednrg — unsplash.com/photos/noHMMrIbkAE — Unsplash License; tower at 41% of frame, object-position 30%.
+  - **City card copy in the deck is the old Mountain copy** ("Resort towns with year-round visitors… beneath the peaks"), which doesn't describe a city. Used as supplied; flag to Nicolle.
+
+### Broken link
+- **"Discover Everwild →" points to everwild.com, which redirects to the Xbox game *Everwild*.** Needs the real spa URL (basecampresorts.com/everwildcanmore?) before launch.
 
 ### Reproducibility
 - Renderings: `sips -s format jpeg -s formatOptions 72 -Z 1600`. Video: `avconvert --preset Preset960x540`; posters via `qlmanage -t -s 1280` (hero poster: `avconvert --start 3 --duration 1` from the source, then `qlmanage -t -s 1600`).
