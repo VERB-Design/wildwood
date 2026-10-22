@@ -48,11 +48,10 @@ Copy source: *Copy Deck – Crestwood Investment Fund* (Google Doc 147w3OXPXgrG_
 ### Media requests not actioned
 - In-development map galleries — no imagery supplied.
 - **Team (2026-10-22):** seven members from the deck, now a carousel on all sizes (four across on desktop, 82% slides on mobile; dots, prev/next, keyboard-scrollable region). Headshots for Sky Mitchell, Birol Fisekci, Teresa Cook and Geoff McLean taken from **basecampresorts.com/about** (the client's own site) and cropped 4:5 — confirm Basecamp is happy to reuse them and supply originals. **Donna Fahey, Antoine Lagerec, Andrew Cockburn show monogram placeholders** — no photos on Basecamp's site; Donna has a headshot on MasterBUILT Hotels' site (her former employer), not used. Titles follow the deck; Basecamp's site lists Birol as Chief Strategy Officer (deck: President, Canada). Public sources also use "Sky McLean"; Basecamp's site and the deck use Sky Mitchell.
-- **Settings — three cards (2026-10-22, Troy + Selly's deck comment):** Urban, Destination, City; eyebrow and location lines removed. Intro line rewritten by us for three settings ("from destinations on their own ground to the heart of the city") — the deck still says "five settings… open prairie".
+- **Settings — three cards (2026-10-22, Troy + Selly's deck comment):** Urban, Destination, City; eyebrow and location lines removed. Intro and card copy updated to the client's "three expressions" copy (2026-10-22). Eyebrow "The Settings" is in the client copy but stays off per Troy.
   - Urban — Vancouver (Yaletown / False Creek) — **supplied by Troy; source and licence not recorded.** Confirm before launch.
   - Destination — **supplied by Troy; this is Eibsee and the Zugspitze, Bavaria, Germany — not Canada.** Reads fine as mood, but a Canadian investor page showing a German alpine lake is a risk if anyone recognises it. Source and licence not recorded.
   - City — Toronto, ON (sunny, from the islands) — @hamednrg — unsplash.com/photos/noHMMrIbkAE — Unsplash License; tower at 41% of frame, object-position 30%.
-  - **City card copy in the deck is the old Mountain copy** ("Resort towns with year-round visitors… beneath the peaks"), which doesn't describe a city. Used as supplied; flag to Nicolle.
 
 ### Broken link
 - **"Discover Everwild →" points to everwild.com, which redirects to the Xbox game *Everwild*.** Needs the real spa URL (basecampresorts.com/everwildcanmore?) before launch.

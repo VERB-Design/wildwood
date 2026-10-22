@@ -188,7 +188,7 @@ image-slot::part(frame){background:#C4B9A6}
       <div style="display:flex;flex-direction:column;gap:20px">
         <h2 style="margin:0;font-family:'commuters-sans','Commuters Sans','Jost','Century Gothic','Avenir Next',Arial,sans-serif;font-weight:600;font-size:clamp(26px,3vw,37px);line-height:1.15;letter-spacing:0.1em;text-transform:uppercase">Where Everwild Goes Next</h2>
       </div>
-      <p style="margin:0;font-size:16px;line-height:1.6;max-width:520px">Each Everwild property is shaped by the land around it. The Crestwood Investment Fund will grow the brand across three settings, from destinations on their own ground to the heart of the city.</p>
+      <p style="margin:0;font-size:16px;line-height:1.6;max-width:520px">Each Everwild property is shaped by the land around it. The Crestwood Investment Fund will grow the brand across three expressions, from city neighbourhoods to open natural landscapes.</p>
     </div>
     <sc-if value="{{ layoutPanels }}" hint-placeholder-val="{{ true }}">
       <div style="overflow-x:auto;width:100vw;margin-left:calc(50% - 50vw)">
@@ -759,9 +759,9 @@ class Component extends DCLogic {
       layoutPanels: (this.props.marketsLayout ?? 'panels') === 'panels',
       layoutIndex: this.props.marketsLayout === 'index',
       panels: [
-        { name: 'Urban', desc: 'City-centre spas built for regular visits. Rooftop and courtyard thermal circuits, treatments, and memberships, a short trip from home or the office.' },
-        { name: 'Destination', desc: 'Everwild on its own ground, beside a natural landscape. Immersive wellness, programming, dining, and a hotel, shaped by its place.' },
-        { name: 'City', desc: 'Resort towns with year-round visitors. Outdoor pools and saunas beneath the peaks, busy through both the ski season and summer.' }
+        { name: 'Urban', desc: 'Everwild inside the city. Rooftops, bathing, and day-use experiences in adaptive-reuse buildings, compact and flexible yet unmistakably Everwild.' },
+        { name: 'Destination', desc: 'Everwild on its own ground. Immersive wellness, dining, and an integrated hotel, shaped by its landscape and culture.' },
+        { name: 'City', desc: 'Everwild in the neighbourhood. Saunas and treatments made for regular visits, a familiar place to return to each week.' }
       ].map((m, i) => {
         const on = i === (this.state.panel ?? 0);
         // Settings imagery: Urban + Destination supplied by Troy (2026-10-22); City = Unsplash (credits in docs/PRODUCTION-NOTES.md)
