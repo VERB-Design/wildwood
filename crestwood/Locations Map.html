@@ -169,30 +169,30 @@
 
   const places = [
     { open: true, slug: 'canmore', name: 'Canmore', prov: 'AB', sub: 'Operating · Alberta', ll: [-115.3445, 51.0934], z: 12, tag: 'Alberta · Operating', url: 'https://stayeverwild.com/canmore/',
-      imgs: [['img/map/canmore-a.jpg', 'Guests walking past the sauna dome beneath the Three Sisters'], ['img/map/canmore-b.jpg', 'Everwild Canmore pools at dusk'], ['img/map/canmore-c.jpg', 'Guests in the outdoor pool']],
+      imgs: [['img/map/canmore-a.jpg', 'Everwild Canmore from above in winter, steam rising beneath the peaks'], ['img/map/canmore-b.jpg', 'Everwild Canmore pools at dusk'], ['img/map/canmore-c.jpg', 'Guests in the outdoor pool']],
       desc: 'The original Everwild, set in the Bow Valley with views of the Three Sisters. The flagship for the brand’s thermal circuit.',
-      facts: [['Type', 'Mountain Nordic Spa'], ['Status', 'Open'], ['Address', '1 Silvertip Trail, Canmore, AB'], ['Features', 'Outdoor saunas, cold plunges, rest lodges']] },
-    { done: true, slug: 'fernie', imgs: [['img/map/fernie-a.jpg', 'Rendering: Fernie spa pool'], ['img/map/fernie-b.jpg', 'Rendering: Fernie sauna'], ['img/map/fernie-c.jpg', 'Rendering: Fernie site from the north']], name: 'Fernie', prov: 'BC', sub: 'Targeted opening: Q4 2027', ll: [-115.0616, 49.5030], z: 11, tag: 'British Columbia · Under construction',
+      facts: [['Type', 'Destination'], ['Status', 'Open'], ['Address', '1 Silvertip Trail, Canmore, AB'], ['Features', 'Outdoor saunas, cold plunges, rest lodges']] },
+    { done: true, slug: 'fernie', imgs: [['img/map/fernie-c.jpg', 'Rendering: Fernie site from the north'], ['img/map/fernie-a.jpg', 'Rendering: Fernie spa pool'], ['img/map/fernie-b.jpg', 'Rendering: Fernie sauna']], name: 'Fernie', prov: 'BC', sub: 'Targeted opening: Q4 2027', ll: [-115.0616, 49.5030], z: 11, tag: 'British Columbia · Under construction',
       desc: 'A mountain town in the Elk Valley, known for deep powder in winter and river valleys in summer.',
-      facts: [['Status', 'Under construction'], ['Targeted opening', 'Q4 2027'], ['Province', 'British Columbia']] },
-    { done: true, slug: 'banff', imgs: [['img/map/banff-a.jpg', 'Rendering: Banff pool terrace'], ['img/map/banff-b.jpg', 'Rendering: Banff covered courtyard'], ['img/map/banff-c.jpg', 'Rendering: Banff site from above']], name: 'Banff', prov: 'AB', sub: 'Targeted opening: Q3 2027', ll: [-115.5710, 51.1766], z: 11, tag: 'Alberta · Under construction',
+      facts: [['Type', 'Destination'], ['Status', 'Under construction'], ['Targeted opening', 'Q4 2027'], ['Province', 'British Columbia']] },
+    { done: true, slug: 'banff', imgs: [['img/map/banff-c.jpg', 'Rendering: Banff site from above'], ['img/map/banff-a.jpg', 'Rendering: Banff pool terrace'], ['img/map/banff-b.jpg', 'Rendering: Banff covered courtyard']], name: 'Banff', prov: 'AB', sub: 'Targeted opening: Q3 2027', ll: [-115.5710, 51.1766], z: 11, tag: 'Alberta · Under construction',
       desc: 'Set inside Canada’s first national park, in a town that draws visitors through every season.',
-      facts: [['Status', 'Under construction'], ['Targeted opening', 'Q3 2027'], ['Province', 'Alberta']] },
-    { done: true, slug: 'harmony', imgs: [['img/map/harmony-a.jpg', 'Rendering: Harmony outdoor pools'], ['img/map/harmony-b.jpg', 'Rendering: Harmony relaxation pool'], ['img/map/harmony-c.jpg', 'Rendering: Harmony sauna']], name: 'Harmony', prov: 'AB', sub: 'Targeted opening: Q1 2028', ll: [-114.4036, 51.1124], z: 12, tag: 'Alberta · Under construction',
+      facts: [['Type', 'Urban'], ['Status', 'Under construction'], ['Targeted opening', 'Q3 2027'], ['Province', 'Alberta']] },
+    { done: true, slug: 'harmony', imgs: [['img/map/harmony-wide.jpg', 'Rendering: Harmony site and lake from above'], ['img/map/harmony-a.jpg', 'Rendering: Harmony outdoor pools'], ['img/map/harmony-b.jpg', 'Rendering: Harmony relaxation pool']], name: 'Harmony', prov: 'AB', sub: 'Targeted opening: Q1 2028', ll: [-114.4036, 51.1124], z: 12, tag: 'Alberta · Under construction',
       desc: 'A lakeside community west of Calgary, at the edge of the foothills on the way to the Rockies.',
-      facts: [['Status', 'Under construction'], ['Targeted opening', 'Q1 2028'], ['Province', 'Alberta']] },
+      facts: [['Type', 'Suburban'], ['Status', 'Under construction'], ['Targeted opening', 'Q1 2028'], ['Province', 'Alberta']] },
     { done: false, slug: 'sooke', concept: true, imgs: [['img/map/sooke-a.jpg', 'Concept rendering: Infinity pool on the cliffs above the Strait of Juan de Fuca'], ['img/map/sooke-b.jpg', 'Concept rendering: Sauna looking out over the ocean at sunset'], ['img/map/sooke-c.jpg', 'Concept rendering: Arrival path to Everwild Sooke Point']], name: 'Vancouver Island', prov: 'BC', sub: 'Everwild Sooke Point · In development', ll: [-123.7097, 48.3420], z: 12, tag: 'British Columbia · In development',
       desc: 'Everwild Sooke Point, on the southern tip of Vancouver Island, where the rainforest meets the Strait of Juan de Fuca.',
-      facts: [['Status', 'In development'], ['Region', 'Vancouver Island'], ['Address', '1000 Sooke Point Place & 1000 Silver Spray Dr, Sooke, BC V9Z 1N8']] },
+      facts: [['Type', 'Destination'], ['Status', 'In development'], ['Region', 'Vancouver Island'], ['Address', '1000 Sooke Point Place & 1000 Silver Spray Dr, Sooke, BC V9Z 1N8']] },
     { done: false, slug: 'brew-creek', concept: true, imgs: [['img/map/brew-creek-a.jpg', 'Concept rendering: Forest thermal pools from above'], ['img/map/brew-creek-b.jpg', 'Concept rendering: Sauna overlooking the forest'], ['img/map/brew-creek-c.jpg', 'Concept rendering: Arrival path through the snow']], name: 'Vancouver Mainland', prov: 'BC', sub: 'Everwild Brew Creek · In development', ll: [-123.1297, 50.0127], z: 12, tag: 'British Columbia · In development',
       desc: 'Everwild Brew Creek, in the forest just south of Whistler along the Sea-to-Sky corridor.',
-      facts: [['Status', 'In development'], ['Region', 'Vancouver Mainland'], ['Address', '1 Brew Creek Rd, Whistler, BC V8E 0A7']] },
+      facts: [['Type', 'Destination'], ['Status', 'In development'], ['Region', 'Vancouver Mainland'], ['Address', '1 Brew Creek Rd, Whistler, BC V8E 0A7']] },
     { done: false, slug: 'lake-simcoe', concept: true, imgs: [['img/map/lake-simcoe-a.jpg', 'Concept rendering: Estate and pools from above'], ['img/map/lake-simcoe-b.jpg', 'Concept rendering: Lakeside sauna and dock'], ['img/map/lake-simcoe-c.jpg', 'Concept rendering: Sauna with a view over the lake']], name: 'Rural Ontario', prov: 'ON', sub: 'Everwild Lake Simcoe · In development', ll: [-79.3620, 44.3216], z: 12, tag: 'Ontario · In development',
       desc: 'Everwild Lake Simcoe, on the south shore of the lake, about an hour north of Toronto.',
-      facts: [['Status', 'In development'], ['Region', 'Rural Ontario'], ['Address', '55 Hedge Rd, Georgina, ON L0E 1L0']] },
+      facts: [['Type', 'Destination'], ['Status', 'In development'], ['Region', 'Rural Ontario'], ['Address', '55 Hedge Rd, Georgina, ON L0E 1L0']] },
     { done: false, slug: 'toronto', name: 'Downtown Toronto', prov: 'ON', sub: 'Site TBC · In development', ll: [-79.383, 43.651], z: 11, tag: 'Ontario · In development',
       desc: 'An urban Everwild in Canada’s largest city. The site is still to be confirmed.',
-      facts: [['Status', 'In development'], ['Region', 'Downtown Toronto'], ['Site', 'To be confirmed']] }
+      facts: [['Type', 'Urban'], ['Status', 'In development'], ['Region', 'Downtown Toronto'], ['Site', 'To be confirmed']] }
   ];
 
   const narrow = () => window.innerWidth <= 760;
